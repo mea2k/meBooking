@@ -1,0 +1,53 @@
+# примеры API-запросов
+
+@baseUrl = http://localhost:3000/api
+
+### Создание брони
+# (только клиенты)
+POST {{baseUrl}}/reservations
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImNsaWVudDIiLCJlbWFpbCI6ImNsaWVudDFAMTEucnIiLCJuYW1lIjoiY2xpZW50MiIsInJvbGUiOiJjbGllbnQiLCJfaWQiOjcsImlhdCI6MTcwMjI0ODI2OCwiZXhwIjoxNzAyMjUxODY4fQ.rF076D1B0nh2mA9QzFo1woawFAmcxRD25t5Btmq0Y0w
+
+{
+	"roomId": "3",
+	"dateStart": "2023-12-19",
+	"dateEnd": "2023-12-23",
+	"description": "Профессиональный праздник"
+}
+
+### Список всех броней
+# (только менеджеры)
+GET {{baseUrl}}/reservations/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6Im1hbmFnZXIwMSIsImVtYWlsIjoiZW1haWxAMTEucnIiLCJuYW1lIjoibWFuYWdlcjAxIiwicm9sZSI6Im1hbmFnZXIiLCJfaWQiOjMsImlhdCI6MTcwMjI0Njk5MiwiZXhwIjoxNzAyMjUwNTkyfQ.7KuiJvPNJOz5Z59_yRY-E3-1b0IYxvHCIrFICS8SgoY
+
+### Список броней пользователя
+# (только менеджеры)
+GET {{baseUrl}}/reservations/user/7
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6Im1hbmFnZXIwMSIsImVtYWlsIjoiZW1haWxAMTEucnIiLCJuYW1lIjoibWFuYWdlcjAxIiwicm9sZSI6Im1hbmFnZXIiLCJfaWQiOjMsImlhdCI6MTcwMjI0Njk5MiwiZXhwIjoxNzAyMjUwNTkyfQ.7KuiJvPNJOz5Z59_yRY-E3-1b0IYxvHCIrFICS8SgoY
+
+### Информация по конкретной брони
+GET {{baseUrl}}/reservations/1
+Content-Type: application/json
+
+### Обновление брони
+# (только клиент-собственник или менеджер)
+PUT {{baseUrl}}/reservations/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6Im1hbmFnZXIwMSIsImVtYWlsIjoiZW1haWxAMTEucnIiLCJuYW1lIjoibWFuYWdlcjAxIiwicm9sZSI6Im1hbmFnZXIiLCJfaWQiOjMsImlhdCI6MTcwMjI0Njk5MiwiZXhwIjoxNzAyMjUwNTkyfQ.7KuiJvPNJOz5Z59_yRY-E3-1b0IYxvHCIrFICS8SgoY
+
+{
+	"dateStart": "2023-12-22T00:00:00.000Z",
+	"dateEnd": "2023-12-24T00:00:00.000Z",
+	"description": "+1 человек"
+}
+
+### Удаление брони
+# (только клиент-собственник или менеджер)
+DELETE {{baseUrl}}/reservations/16
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6Im1hbmFnZXIwMSIsImVtYWlsIjoiZW1haWxAMTEucnIiLCJuYW1lIjoibWFuYWdlcjAxIiwicm9sZSI6Im1hbmFnZXIiLCJfaWQiOjMsImlhdCI6MTcwMjI0Njk5MiwiZXhwIjoxNzAyMjUwNTkyfQ.7KuiJvPNJOz5Z59_yRY-E3-1b0IYxvHCIrFICS8SgoY
+
+
+###

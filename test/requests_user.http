@@ -1,0 +1,102 @@
+# примеры API-запросов
+
+@baseUrl = http://localhost:3000/api
+
+### Создание пользователя-админа
+POST {{baseUrl}}/users/admin/register
+Content-Type: application/json
+
+{
+  "login": "admin02",
+  "email": "email@11.rr",
+  "firstName": "admin",
+  "password1": "123",
+  "password2": "123",
+  "role": "admin"
+}
+
+### Создание пользователя-менеджера
+POST {{baseUrl}}/users/admin/register
+Content-Type: application/json
+
+{
+  "login": "manager04",
+  "email": "email@11.rr",
+  "firstName": "manag",
+  "password1": "1234",
+  "password2": "1234",
+  "role": "manager"
+}
+
+### Создание пользователя-клиента
+POST {{baseUrl}}/users/client/register
+Content-Type: application/json
+
+{
+  "login": "client3",
+  "email": "client1@11.rr",
+  "firstName": "cl1",
+  "password1": "123",
+  "password2": "123",
+  "role": "admin"
+}
+
+### Получение информации о пользователе
+GET {{baseUrl}}/users/5
+Content-Type: application/json
+
+### Поиск пользователей-админов
+# (доступно только админам)
+GET {{baseUrl}}/users/admin?name=admin01
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImFkbWluMDEiLCJlbWFpbCI6ImVtYWlsQDExLnJyIiwibmFtZSI6ImFkbWluMDEiLCJyb2xlIjoiYWRtaW4iLCJfaWQiOjEsImlhdCI6MTcwMjA3MjU3NSwiZXhwIjoxNzAyMDc2MTc1fQ.ZRJKjcdRBokhqHrCLPMEuHTEnNtrUP91zBCQ4UTMeOA
+
+### Поиск пользователей-менеджеров
+GET {{baseUrl}}/users/manager?offset=1&limit=2
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6Im1hbmFnZXIwNCIsImVtYWlsIjoiZW1haWxAMTEucnIiLCJuYW1lIjoibWFuYWdlcjA0Iiwicm9sZSI6Im1hbmFnZXIiLCJfaWQiOjksImlhdCI6MTcwMjA3NTIwNiwiZXhwIjoxNzAyMDc4ODA2fQ.EF-n93t_kpBl7Nt-1IUqbwJY1fuuURYAiCpPXaTbOm8
+
+### Аутентификация
+POST {{baseUrl}}/users/login
+Content-Type: application/json
+
+{
+  "login": "client1",
+  "password": "123"
+}
+
+### Получение токена при аутентификации
+# (для админа)
+POST {{baseUrl}}/users/token
+Content-Type: application/json
+
+{
+  "login": "admin02",
+  "password": "123"
+}
+
+### (для манагера)
+POST {{baseUrl}}/users/token
+Content-Type: application/json
+
+{
+  "login": "manager01",
+  "password": "1234"
+}
+
+### (для клиента)
+POST {{baseUrl}}/users/token
+Content-Type: application/json
+
+{
+  "login": "client2",
+  "password": "123"
+}
+
+
+### Профиль пользователя 
+# (доступен только после аутентификации - по токену)
+GET {{baseUrl}}/users/profile
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImFkbWluMDEiLCJlbWFpbCI6ImVtYWlsQDExLnJyIiwibmFtZSI6ImFkbWluMDEiLCJyb2xlIjoiYWRtaW4iLCJfaWQiOjEsImlhdCI6MTcwMjA3MjU3NSwiZXhwIjoxNzAyMDc2MTc1fQ.ZRJKjcdRBokhqHrCLPMEuHTEnNtrUP91zBCQ4UTMeOA
+

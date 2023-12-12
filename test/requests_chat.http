@@ -1,0 +1,127 @@
+# примеры API-запросов
+
+@baseUrl = http://localhost:3000/api
+
+### Создание чата
+# (только клиент)
+POST {{baseUrl}}/support
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImNsaWVudDIiLCJlbWFpbCI6ImNsaWVudDFAMTEucnIiLCJuYW1lIjoiY2xpZW50MiIsInJvbGUiOiJjbGllbnQiLCJfaWQiOjcsImlhdCI6MTcwMjQwNjg3NCwiZXhwIjoxNzAyNDEwNDc0fQ.5ztNShcag4NB8p0EEOwKKmXBlhvemGouwps2EqgyKxs
+
+{
+	"text": "Нужна помощь"
+}
+
+### Отправка сообщения в чат
+# (только менеджеры и клиенты)
+### клиент
+POST {{baseUrl}}/support/3
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImNsaWVudDIiLCJlbWFpbCI6ImNsaWVudDFAMTEucnIiLCJuYW1lIjoiY2xpZW50MiIsInJvbGUiOiJjbGllbnQiLCJfaWQiOjcsImlhdCI6MTcwMjQwNjg3NCwiZXhwIjoxNzAyNDEwNDc0fQ.5ztNShcag4NB8p0EEOwKKmXBlhvemGouwps2EqgyKxs
+
+{
+	"text": "Все еще нужна помощь"
+}
+
+### менеджер
+POST {{baseUrl}}/support/3
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6Im1hbmFnZXIwMSIsImVtYWlsIjoiZW1haWxAMTEucnIiLCJuYW1lIjoibWFuYWdlcjAxIiwicm9sZSI6Im1hbmFnZXIiLCJfaWQiOjMsImlhdCI6MTcwMjQxNTM4MywiZXhwIjoxNzAyNDE4OTgzfQ.RRVni7E4LoVki5jhAHde45TvTGX3hMA7NJRn53gZric
+
+{
+	"text": "Вам ответит первый освободившийся специалист"
+}
+
+### Список всех чатов
+# (только менеджеры)
+GET {{baseUrl}}/support/?limit=0
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6Im1hbmFnZXIwMSIsImVtYWlsIjoiZW1haWxAMTEucnIiLCJuYW1lIjoibWFuYWdlcjAxIiwicm9sZSI6Im1hbmFnZXIiLCJfaWQiOjMsImlhdCI6MTcwMjQxNTM4MywiZXhwIjoxNzAyNDE4OTgzfQ.RRVni7E4LoVki5jhAHde45TvTGX3hMA7NJRn53gZric
+
+### Список всех чатов пользователя
+# (только авторизованный клиент)
+GET {{baseUrl}}/support/user
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImNsaWVudDIiLCJlbWFpbCI6ImNsaWVudDFAMTEucnIiLCJuYW1lIjoiY2xpZW50MiIsInJvbGUiOiJjbGllbnQiLCJfaWQiOjcsImlhdCI6MTcwMjQxMDc0NywiZXhwIjoxNzAyNDE0MzQ3fQ.kluTlSrfRwZn_uv_WrKhXis64T9efxC33uLlm1Kh1nM
+
+### Список чатов выбранного пользователя
+# (только менеджеры)
+GET {{baseUrl}}/support/user/7
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6Im1hbmFnZXIwMSIsImVtYWlsIjoiZW1haWxAMTEucnIiLCJuYW1lIjoibWFuYWdlcjAxIiwicm9sZSI6Im1hbmFnZXIiLCJfaWQiOjMsImlhdCI6MTcwMjQxNTM4MywiZXhwIjoxNzAyNDE4OTgzfQ.RRVni7E4LoVki5jhAHde45TvTGX3hMA7NJRn53gZric
+
+### Информация по конкретному чату
+# (только менеджеры и клиенты)
+GET {{baseUrl}}/support/3
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6Im1hbmFnZXIwMSIsImVtYWlsIjoiZW1haWxAMTEucnIiLCJuYW1lIjoibWFuYWdlcjAxIiwicm9sZSI6Im1hbmFnZXIiLCJfaWQiOjMsImlhdCI6MTcwMjQxNTM4MywiZXhwIjoxNzAyNDE4OTgzfQ.RRVni7E4LoVki5jhAHde45TvTGX3hMA7NJRn53gZric
+
+### Число непрочитанных сообщений по конкретному чату
+# (только менеджеры)
+GET {{baseUrl}}/support/3/unread
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6Im1hbmFnZXIwMSIsImVtYWlsIjoiZW1haWxAMTEucnIiLCJuYW1lIjoibWFuYWdlcjAxIiwicm9sZSI6Im1hbmFnZXIiLCJfaWQiOjMsImlhdCI6MTcwMjQxNTM4MywiZXhwIjoxNzAyNDE4OTgzfQ.RRVni7E4LoVki5jhAHde45TvTGX3hMA7NJRn53gZric
+
+### Отметка сообщений о прочтении  по конкретному чату
+# (только менеджеры)
+POST {{baseUrl}}/support/3/read
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6Im1hbmFnZXIwMSIsImVtYWlsIjoiZW1haWxAMTEucnIiLCJuYW1lIjoibWFuYWdlcjAxIiwicm9sZSI6Im1hbmFnZXIiLCJfaWQiOjMsImlhdCI6MTcwMjQxNTM4MywiZXhwIjoxNzAyNDE4OTgzfQ.RRVni7E4LoVki5jhAHde45TvTGX3hMA7NJRn53gZric
+
+{
+  "createdBefore": "2023-12-12T19:13:53.387Z"
+}
+
+
+### Обновление чата (закрытие)
+# (только менеджеры)
+PUT {{baseUrl}}/support/3
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6Im1hbmFnZXIwMSIsImVtYWlsIjoiZW1haWxAMTEucnIiLCJuYW1lIjoibWFuYWdlcjAxIiwicm9sZSI6Im1hbmFnZXIiLCJfaWQiOjMsImlhdCI6MTcwMjQxNjQzMywiZXhwIjoxNzAyNDIwMDMzfQ.i92K_8iCL1zVVCxq9CzlZRO6sFm6aVlIR1Hy06J8ybg
+
+{
+	"isActive": "false"
+}
+
+### Обновление номера гостиницы
+PUT {{baseUrl}}/hotels/rooms/3
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6Im1hbmFnZXIwMSIsImVtYWlsIjoiZW1haWxAMTEucnIiLCJuYW1lIjoibWFuYWdlcjAxIiwicm9sZSI6Im1hbmFnZXIiLCJfaWQiOjMsImlhdCI6MTcwMjE2MzY4NSwiZXhwIjoxNzAyMTY3Mjg1fQ.TEeUzAMQ59LOrIEBRSSB5jVLpyAhTTJfVSim4eGfCEQ
+
+{
+	"isEnabled": "false"
+}
+
+
+### Удаление гостиницы
+DELETE {{baseUrl}}/hotels/6
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImFkbWluMDIiLCJlbWFpbCI6ImVtYWlsQDExLnJyIiwibmFtZSI6ImFkbWluMDIiLCJyb2xlIjoiYWRtaW4iLCJfaWQiOjIsImlhdCI6MTcwMjE1NTU4MCwiZXhwIjoxNzAyMTU5MTgwfQ.KzOQSFyDLR4Z4fm_Z4HSv81LM8lx1gs_2G8dJUAtnCc
+
+### Поиск гостиниц
+# GET
+GET {{baseUrl}}/hotels/search?title=&offset=1
+Content-Type: application/json
+
+### POST
+POST {{baseUrl}}/hotels/search
+Content-Type: application/json
+
+{
+	"title": "2"
+}
+
+### Поиск номеров гостиниц
+# GET
+GET {{baseUrl}}/hotels/rooms/search?title=&offset=1
+Content-Type: application/json
+
+### POST
+POST {{baseUrl}}/hotels/rooms/search
+Content-Type: application/json
+
+{
+	"title": "double",
+	"services": ["фен"]
+}
+

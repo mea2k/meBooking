@@ -1,0 +1,96 @@
+# примеры API-запросов
+
+@baseUrl = http://localhost:3000/api
+
+### Создание гостиницы
+# (только админы)
+POST {{baseUrl}}/hotels/register
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImFkbWluMDIiLCJlbWFpbCI6ImVtYWlsQDExLnJyIiwibmFtZSI6ImFkbWluMDIiLCJyb2xlIjoiYWRtaW4iLCJfaWQiOjIsImlhdCI6MTcwMjE1OTc0MSwiZXhwIjoxNzAyMTYzMzQxfQ.vVRuXCQZCl3Hjh-CuxHHWU1cFBKJ4qlQZuJVz3qRY8Y
+
+{
+	"title": "Гостиница 5",
+	"description": "5 звезд"
+}
+
+### Добавление номера гостиницы
+# (только менеджеры)
+POST {{baseUrl}}/hotels/rooms
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6Im1hbmFnZXIwMSIsImVtYWlsIjoiZW1haWxAMTEucnIiLCJuYW1lIjoibWFuYWdlcjAxIiwicm9sZSI6Im1hbmFnZXIiLCJfaWQiOjMsImlhdCI6MTcwMjE2MzY4NSwiZXhwIjoxNzAyMTY3Mjg1fQ.TEeUzAMQ59LOrIEBRSSB5jVLpyAhTTJfVSim4eGfCEQ
+
+{
+	"hotel": "3",
+	"title": "double twin",
+	"description": "Дизайнерский дабл с окном",
+	"services": ["душ", "2-спальная кровать", "фен", "балкон"]
+}
+
+
+### Список гостиниц
+GET {{baseUrl}}/hotels/
+Content-Type: application/json
+
+### Информация по конкретной гостинице
+GET {{baseUrl}}/hotels/2
+Content-Type: application/json
+
+### Список номеров по конкретной гостинице
+GET {{baseUrl}}/hotels/2/rooms?
+Content-Type: application/json
+
+### Информация по конкретному номеру
+GET {{baseUrl}}/hotels/rooms/3
+Content-Type: application/json
+
+### Обновление гостиницы
+PUT {{baseUrl}}/hotels/3
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6Im1hbmFnZXIwMSIsImVtYWlsIjoiZW1haWxAMTEucnIiLCJuYW1lIjoibWFuYWdlcjAxIiwicm9sZSI6Im1hbmFnZXIiLCJfaWQiOjMsImlhdCI6MTcwMjE2MzY4NSwiZXhwIjoxNzAyMTY3Mjg1fQ.TEeUzAMQ59LOrIEBRSSB5jVLpyAhTTJfVSim4eGfCEQ
+
+{
+	"title": "Госиница 5++"
+}
+
+### Обновление номера гостиницы
+PUT {{baseUrl}}/hotels/rooms/3
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6Im1hbmFnZXIwMSIsImVtYWlsIjoiZW1haWxAMTEucnIiLCJuYW1lIjoibWFuYWdlcjAxIiwicm9sZSI6Im1hbmFnZXIiLCJfaWQiOjMsImlhdCI6MTcwMjE2MzY4NSwiZXhwIjoxNzAyMTY3Mjg1fQ.TEeUzAMQ59LOrIEBRSSB5jVLpyAhTTJfVSim4eGfCEQ
+
+{
+	"isEnabled": "false"
+}
+
+
+### Удаление гостиницы
+DELETE {{baseUrl}}/hotels/6
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImFkbWluMDIiLCJlbWFpbCI6ImVtYWlsQDExLnJyIiwibmFtZSI6ImFkbWluMDIiLCJyb2xlIjoiYWRtaW4iLCJfaWQiOjIsImlhdCI6MTcwMjE1NTU4MCwiZXhwIjoxNzAyMTU5MTgwfQ.KzOQSFyDLR4Z4fm_Z4HSv81LM8lx1gs_2G8dJUAtnCc
+
+### Поиск гостиниц
+# GET
+GET {{baseUrl}}/hotels/search?title=&offset=1
+Content-Type: application/json
+
+### POST
+POST {{baseUrl}}/hotels/search
+Content-Type: application/json
+
+{
+	"title": "2"
+}
+
+### Поиск номеров гостиниц
+# GET
+GET {{baseUrl}}/hotels/rooms/search?title=&offset=1
+Content-Type: application/json
+
+### POST
+POST {{baseUrl}}/hotels/rooms/search
+Content-Type: application/json
+
+{
+	"title": "double",
+	"services": ["фен"]
+}
+
