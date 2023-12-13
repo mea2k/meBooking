@@ -6,10 +6,10 @@
 # (только админы)
 POST {{baseUrl}}/hotels/register
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImFkbWluMDIiLCJlbWFpbCI6ImVtYWlsQDExLnJyIiwibmFtZSI6ImFkbWluMDIiLCJyb2xlIjoiYWRtaW4iLCJfaWQiOjIsImlhdCI6MTcwMjE1OTc0MSwiZXhwIjoxNzAyMTYzMzQxfQ.vVRuXCQZCl3Hjh-CuxHHWU1cFBKJ4qlQZuJVz3qRY8Y
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIxIiwiZW1haWwiOiJlbWFpbEAxMS5yciIsImxvZ2luIjoiYWRtaW4wMiIsIm5hbWUiOiJhZG1pbjAyIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAyNTA3MDA0LCJleHAiOjE3MDI1MTA2MDR9.Gstnv81K8Xgf83NTJMF7JRVR9hIKzEJW--ESG1HnYU4
 
 {
-	"title": "Гостиница 5",
+	"title": "Гостиница TopHotel",
 	"description": "5 звезд"
 }
 
@@ -17,15 +17,26 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImFkbWluM
 # (только менеджеры)
 POST {{baseUrl}}/hotels/rooms
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6Im1hbmFnZXIwMSIsImVtYWlsIjoiZW1haWxAMTEucnIiLCJuYW1lIjoibWFuYWdlcjAxIiwicm9sZSI6Im1hbmFnZXIiLCJfaWQiOjMsImlhdCI6MTcwMjE2MzY4NSwiZXhwIjoxNzAyMTY3Mjg1fQ.TEeUzAMQ59LOrIEBRSSB5jVLpyAhTTJfVSim4eGfCEQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI0IiwiZW1haWwiOiJtYWdlcjA1QDExLnJyIiwibG9naW4iOiJtYW5hZ2VyMDUiLCJuYW1lIjoibWFuYWdlcjA1Iiwicm9sZSI6Im1hbmFnZXIiLCJpYXQiOjE3MDI1MDczMDMsImV4cCI6MTcwMjUxMDkwM30.BggWi7UUU9q4MsjUOCBs01UNUBGk5T079oqr1k88hiM
 
 {
 	"hotel": "3",
-	"title": "double twin",
-	"description": "Дизайнерский дабл с окном",
-	"services": ["душ", "2-спальная кровать", "фен", "балкон"]
+	"title": "double",
+	"description": "Дабл с балконом",
+	"services": ["ванная", "2-спальная кровать", "фен", "балкон"]
 }
 
+### 2й пример
+POST {{baseUrl}}/hotels/rooms
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI0IiwiZW1haWwiOiJtYWdlcjA1QDExLnJyIiwibG9naW4iOiJtYW5hZ2VyMDUiLCJuYW1lIjoibWFuYWdlcjA1Iiwicm9sZSI6Im1hbmFnZXIiLCJpYXQiOjE3MDI1MDczMDMsImV4cCI6MTcwMjUxMDkwM30.BggWi7UUU9q4MsjUOCBs01UNUBGk5T079oqr1k88hiM
+
+{
+	"hotel": "3",
+	"title": "single",
+	"description": "Просто сингл",
+	"services": ["душ", "1-спальная кровать", "фен"]
+}
 
 ### Список гостиниц
 GET {{baseUrl}}/hotels/
@@ -36,7 +47,8 @@ GET {{baseUrl}}/hotels/2
 Content-Type: application/json
 
 ### Список номеров по конкретной гостинице
-GET {{baseUrl}}/hotels/2/rooms?
+### (только доступные - isEnabled=true)
+GET {{baseUrl}}/hotels/3/rooms?offset=0&limit=0
 Content-Type: application/json
 
 ### Информация по конкретному номеру
@@ -44,18 +56,20 @@ GET {{baseUrl}}/hotels/rooms/3
 Content-Type: application/json
 
 ### Обновление гостиницы
+# (только админы)
 PUT {{baseUrl}}/hotels/3
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6Im1hbmFnZXIwMSIsImVtYWlsIjoiZW1haWxAMTEucnIiLCJuYW1lIjoibWFuYWdlcjAxIiwicm9sZSI6Im1hbmFnZXIiLCJfaWQiOjMsImlhdCI6MTcwMjE2MzY4NSwiZXhwIjoxNzAyMTY3Mjg1fQ.TEeUzAMQ59LOrIEBRSSB5jVLpyAhTTJfVSim4eGfCEQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIxIiwiZW1haWwiOiJlbWFpbEAxMS5yciIsImxvZ2luIjoiYWRtaW4wMiIsIm5hbWUiOiJhZG1pbjAyIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAyNTA3MDA0LCJleHAiOjE3MDI1MTA2MDR9.Gstnv81K8Xgf83NTJMF7JRVR9hIKzEJW--ESG1HnYU4
 
 {
-	"title": "Госиница 5++"
+	"title": "Госиница TopHotel+"
 }
 
 ### Обновление номера гостиницы
+# (только менеджеры)
 PUT {{baseUrl}}/hotels/rooms/3
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6Im1hbmFnZXIwMSIsImVtYWlsIjoiZW1haWxAMTEucnIiLCJuYW1lIjoibWFuYWdlcjAxIiwicm9sZSI6Im1hbmFnZXIiLCJfaWQiOjMsImlhdCI6MTcwMjE2MzY4NSwiZXhwIjoxNzAyMTY3Mjg1fQ.TEeUzAMQ59LOrIEBRSSB5jVLpyAhTTJfVSim4eGfCEQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI0IiwiZW1haWwiOiJtYWdlcjA1QDExLnJyIiwibG9naW4iOiJtYW5hZ2VyMDUiLCJuYW1lIjoibWFuYWdlcjA1Iiwicm9sZSI6Im1hbmFnZXIiLCJpYXQiOjE3MDI1MDczMDMsImV4cCI6MTcwMjUxMDkwM30.BggWi7UUU9q4MsjUOCBs01UNUBGk5T079oqr1k88hiM
 
 {
 	"isEnabled": "false"
@@ -63,13 +77,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6Im1hbmFnZ
 
 
 ### Удаление гостиницы
-DELETE {{baseUrl}}/hotels/6
+# (только админы)
+DELETE {{baseUrl}}/hotels/1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImFkbWluMDIiLCJlbWFpbCI6ImVtYWlsQDExLnJyIiwibmFtZSI6ImFkbWluMDIiLCJyb2xlIjoiYWRtaW4iLCJfaWQiOjIsImlhdCI6MTcwMjE1NTU4MCwiZXhwIjoxNzAyMTU5MTgwfQ.KzOQSFyDLR4Z4fm_Z4HSv81LM8lx1gs_2G8dJUAtnCc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIxIiwiZW1haWwiOiJlbWFpbEAxMS5yciIsImxvZ2luIjoiYWRtaW4wMiIsIm5hbWUiOiJhZG1pbjAyIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAyNTA3MDA0LCJleHAiOjE3MDI1MTA2MDR9.Gstnv81K8Xgf83NTJMF7JRVR9hIKzEJW--ESG1HnYU4
 
 ### Поиск гостиниц
 # GET
-GET {{baseUrl}}/hotels/search?title=&offset=1
+GET {{baseUrl}}/hotels/search?title=&offset=0
 Content-Type: application/json
 
 ### POST
@@ -77,12 +92,12 @@ POST {{baseUrl}}/hotels/search
 Content-Type: application/json
 
 {
-	"title": "2"
+	"title": "Top"
 }
 
 ### Поиск номеров гостиниц
 # GET
-GET {{baseUrl}}/hotels/rooms/search?title=&offset=1
+GET {{baseUrl}}/hotels/rooms/search?title=&offset=0
 Content-Type: application/json
 
 ### POST
@@ -91,6 +106,6 @@ Content-Type: application/json
 
 {
 	"title": "double",
-	"services": ["фен"]
+	"services": ["душ"]
 }
 

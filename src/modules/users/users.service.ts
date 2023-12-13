@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { IUser, IUserDto, SearchUserParams, USERS_STORAGE } from './users.interfaces';
 import { UserStorageFile } from './storage/userStorageFile';
 import { UserStorageDb } from './storage/userStorageDb';
@@ -38,7 +38,12 @@ export class UsersService {
 	 * @returns Promise<сам добавленный объект в формате JSON ({...})>
 	 */
 	create(item: IUserDto) {
-		return this._storage.create(item);
+		try {
+			return this._storage.create(item);
+		} catch(e) {
+			console.log('here')
+			throw new HttpException((e as Error).message, HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	/** ИЗМЕНЕНИЕ ПАРАМЕТРОВ ПОЛЬЗОВАТЕЛЯ
@@ -85,7 +90,6 @@ export class UsersService {
 	}
 
 
-
 	/** ПРОВЕРКА РАВЕНСТВА ИДЕНТИФИКАТОРОВ ПОЛЬЗОВАТЕЛЯ
 	 * (используется при определении авторства объекта)
 	 * @constructor
@@ -100,9 +104,5 @@ export class UsersService {
 		} else {
 			return user?._id == otherId;
 		}
-
 	}
-
-
 }
-

@@ -22,7 +22,8 @@ export class AuthService {
 		// сравнение пароля и хеш-строки из хранилища
 		if (user && (await compareHash(user.login, userAuth.password, user.passwordHash))) {
 			const { passwordHash, ...result } = user;
-			return result;
+			// для Mongo надо вернуть ._doc
+			return (result as any)._doc ? (result as any)._doc : result;
 		}
 		// если не совпало - формируется исключение
 		throw new UnauthorizedException();

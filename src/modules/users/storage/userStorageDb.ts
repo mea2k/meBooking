@@ -32,21 +32,23 @@ class UserStorageDb extends StorageDb<UserDocument, IUserDto, '_id'> {
 	// СПЕЦИФИЧЕСКИЕ МЕТОДЫ
 	//
 	async getByLogin(login: IUser['login']): Promise<UserDocument | null | any> {
-		return this._model.findOne({ login: login }).exec();
+		return this._model.findOne({ login: login }).select('-__v').exec();
 	}
 	async getByEmail(email: IUser['email']): Promise<UserDocument | null | any> {
 		return this._model.findOne({ email: email }).exec();
 	}
 	async search(params: SearchUserParams): Promise<UserDocument[]> {
+		// формируем фильтр поиска исходя из заполненных полей params
+		const filter = [{}];
+		'name' in params &&	params.name &&
+			filter.push({ name: new RegExp(params.name, 'gi') });
+		'email' in params && params.email &&
+			filter.push({ email: new RegExp(params.email, 'gi') });
+		'contactPhone' in params &&	params.contactPhone &&
+			filter.push({ contactPhone: new RegExp(params.contactPhone, 'gi') });
+		'role' in params && params.role && filter.push({ role: params.role });
 		return this._model
-			.find({
-				$or: [
-					{ email: params.email },
-					{ name: params.name },
-					{ contactPhone: params.contactPhone },
-				],
-				role: params.role,
-			})
+			.find({ $and: filter }, { __v: 0 })
 			.skip(params.offset ? params.offset : 0)
 			.limit(params.limit ? params.limit : 0);
 	}

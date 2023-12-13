@@ -12,7 +12,6 @@ class HotelStorageFile extends StorageFile<IHotel, IHotelDto, '_id'> {
 			fs.mkdirSync(config.get('DATA_PATH'), { recursive: true });
 		}
 		super(config.get('DATA_PATH') + config.get('HOTELS_FILE'), '_id');
-		console.log(this._storage);
 	}
 
 	//

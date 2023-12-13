@@ -7,8 +7,8 @@ POST {{baseUrl}}/users/admin/register
 Content-Type: application/json
 
 {
-  "login": "admin02",
-  "email": "email@11.rr",
+  "login": "admin01",
+  "email": "email01@11.rr",
   "firstName": "admin",
   "password1": "123",
   "password2": "123",
@@ -20,8 +20,8 @@ POST {{baseUrl}}/users/admin/register
 Content-Type: application/json
 
 {
-  "login": "manager04",
-  "email": "email@11.rr",
+  "login": "manager05",
+  "email": "mager05@11.rr",
   "firstName": "manag",
   "password1": "1234",
   "password2": "1234",
@@ -33,8 +33,8 @@ POST {{baseUrl}}/users/client/register
 Content-Type: application/json
 
 {
-  "login": "client3",
-  "email": "client1@11.rr",
+  "login": "client2",
+  "email": "client2@11.rr",
   "firstName": "cl1",
   "password1": "123",
   "password2": "123",
@@ -42,19 +42,20 @@ Content-Type: application/json
 }
 
 ### Получение информации о пользователе
-GET {{baseUrl}}/users/5
+GET {{baseUrl}}/users/4
 Content-Type: application/json
 
 ### Поиск пользователей-админов
 # (доступно только админам)
-GET {{baseUrl}}/users/admin?name=admin01
+GET {{baseUrl}}/users/admin?name=admin
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImFkbWluMDEiLCJlbWFpbCI6ImVtYWlsQDExLnJyIiwibmFtZSI6ImFkbWluMDEiLCJyb2xlIjoiYWRtaW4iLCJfaWQiOjEsImlhdCI6MTcwMjA3MjU3NSwiZXhwIjoxNzAyMDc2MTc1fQ.ZRJKjcdRBokhqHrCLPMEuHTEnNtrUP91zBCQ4UTMeOA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIxIiwiZW1haWwiOiJlbWFpbEAxMS5yciIsImxvZ2luIjoiYWRtaW4wMiIsIm5hbWUiOiJhZG1pbjAyIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAyNTA0NzcxLCJleHAiOjE3MDI1MDgzNzF9.85gcg0SuqoNLMCWvE7S12BBjn0xlIyZ2rlTfcex3dQA
 
 ### Поиск пользователей-менеджеров
+# (доступно только менеджерам)
 GET {{baseUrl}}/users/manager?offset=1&limit=2
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6Im1hbmFnZXIwNCIsImVtYWlsIjoiZW1haWxAMTEucnIiLCJuYW1lIjoibWFuYWdlcjA0Iiwicm9sZSI6Im1hbmFnZXIiLCJfaWQiOjksImlhdCI6MTcwMjA3NTIwNiwiZXhwIjoxNzAyMDc4ODA2fQ.EF-n93t_kpBl7Nt-1IUqbwJY1fuuURYAiCpPXaTbOm8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI0IiwiZW1haWwiOiJtYWdlcjA1QDExLnJyIiwibG9naW4iOiJtYW5hZ2VyMDUiLCJuYW1lIjoibWFuYWdlcjA1Iiwicm9sZSI6Im1hbmFnZXIiLCJpYXQiOjE3MDI1MDY3ODEsImV4cCI6MTcwMjUxMDM4MX0.6GYrwUGaC4k02kfzT5T4e9yqtRcrwaTXMcs7IPZG3X0
 
 ### Аутентификация
 POST {{baseUrl}}/users/login
@@ -66,7 +67,7 @@ Content-Type: application/json
 }
 
 ### Получение токена при аутентификации
-# (для админа)
+# (для админа) 
 POST {{baseUrl}}/users/token
 Content-Type: application/json
 
@@ -80,7 +81,7 @@ POST {{baseUrl}}/users/token
 Content-Type: application/json
 
 {
-  "login": "manager01",
+  "login": "manager05",
   "password": "1234"
 }
 
@@ -98,5 +99,5 @@ Content-Type: application/json
 # (доступен только после аутентификации - по токену)
 GET {{baseUrl}}/users/profile
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImFkbWluMDEiLCJlbWFpbCI6ImVtYWlsQDExLnJyIiwibmFtZSI6ImFkbWluMDEiLCJyb2xlIjoiYWRtaW4iLCJfaWQiOjEsImlhdCI6MTcwMjA3MjU3NSwiZXhwIjoxNzAyMDc2MTc1fQ.ZRJKjcdRBokhqHrCLPMEuHTEnNtrUP91zBCQ4UTMeOA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIxIiwiZW1haWwiOiJlbWFpbEAxMS5yciIsImxvZ2luIjoiYWRtaW4wMiIsIm5hbWUiOiJhZG1pbjAyIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAyNTA0NzcxLCJleHAiOjE3MDI1MDgzNzF9.85gcg0SuqoNLMCWvE7S12BBjn0xlIyZ2rlTfcex3dQA
 

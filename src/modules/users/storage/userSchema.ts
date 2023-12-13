@@ -43,7 +43,7 @@ export class User implements IUser {
 
 	@Prop({
 		type: String,
-		required: true,
+		required: false,
 	})
 	contactPhone: IUser['contactPhone'];
 

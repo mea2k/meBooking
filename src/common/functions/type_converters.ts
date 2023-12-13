@@ -21,3 +21,7 @@ export function toNumber(value: string, opts: ToNumberOptions = {}): number {
 export function toLowerCase(value: string): string {
 	return value.toLowerCase();
 }
+
+export function toBool(value: string): boolean {
+	return String(value).toLowerCase() == 'true';
+}

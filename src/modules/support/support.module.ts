@@ -4,7 +4,7 @@ import { SupportController } from './support.controller';
 import { SupportService } from './support.service';
 import { ConfigModule } from '../config/config.module';
 import { SupportChat, SupportChatSchema } from './storage/supportChatSchema';
-import { ChatMessage, ChatMessageSchema } from './storage/chatMessageSchema';
+import { ChatMessages, ChatMessageSchema } from './storage/chatMessageSchema';
 import { SupportChatStorageDb } from './storage/supportChatStorageDb';
 import { SupportChatStorageFile } from './storage/supportChatStorageFile';
 import { ChatMessageStorageDb } from './storage/chatMessageStorageDb';
@@ -42,7 +42,7 @@ import { CHATMESSAGES_STORAGE, SUPPORTCHAT_STORAGE } from './support.interfaces'
 						{ name: SupportChat.name, schema: SupportChatSchema },
 					]),
 					MongooseModule.forFeature([
-						{ name: ChatMessage.name, schema: ChatMessageSchema },
+						{ name: ChatMessages.name, schema: ChatMessageSchema },
 					]),
 			  ]
 			: []),

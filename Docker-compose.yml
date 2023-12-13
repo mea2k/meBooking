@@ -1,0 +1,52 @@
+version: '3.7'
+services:
+  mongo:
+    image: mongo
+    restart: always
+    hostname: ${MONGO_SERVER_NAME}
+    ports:
+      - ${MONGO_SERVER_PORT}:${MONGO_SERVER_PORT}
+    env_file: .env
+    logging:
+      driver: none
+    volumes:
+      - ${DATA_PATH}db:/data/db
+      - ${DATA_PATH}log:/var/log
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    healthcheck:
+      test: [ "CMD", "mongosh", "localhost:27017/bookstor", "--eval", "'db.runCommand(\"ping\").ok'" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    command: mongod --quiet --logpath /dev/null
+     
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8080:8080
+      - 8081:8081
+      - 5000:3000
+    env_file: .env
+    depends_on:
+      mongo:
+        condition: service_healthy
+ 
+  mebooking:
+    image: makevg/mebooking
+    build:
+      context: ./
+      dockerfile: ${DOCKERFILE:-./Dockerfile}
+    env_file: .env
+    ports:
+      - ${PORT}:${PORT}
+    depends_on:
+      mongo:
+        condition: service_healthy
+    working_dir: /usr/src/app
+    volumes:
+      - ./dist:/usr/src/app/dist
+      - ${DATA_PATH}:/usr/src/app/data
+      - ${UPLOAD_PATH}:/usr/src/app/public/upload
+  

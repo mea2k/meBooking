@@ -4,10 +4,10 @@ import { IChatMessage } from '../support.interfaces';
 import { User } from 'src/modules/users/storage/userSchema';
 import { SupportChat } from './supportChatSchema';
 
-export type ChatMessageDocument = ChatMessage & Document;
+export type ChatMessageDocument = ChatMessages & Document;
 
 @Schema()
-export class ChatMessage implements IChatMessage {
+export class ChatMessages implements IChatMessage {
 	@Prop({
 		type: String,
 		//unique: true,     // не надо, _id и так unique
@@ -47,7 +47,6 @@ export class ChatMessage implements IChatMessage {
 		type: Boolean,
 	})
 	readAt: IChatMessage['readAt'];
-
 }
 
-export const ChatMessageSchema = SchemaFactory.createForClass(ChatMessage);
+export const ChatMessageSchema = SchemaFactory.createForClass(ChatMessages);

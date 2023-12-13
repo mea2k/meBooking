@@ -31,11 +31,13 @@ abstract class StorageDb<ItemType, ItemTypeDto, KeyName extends keyof ItemType>
 	// РЕАЛИЗАЦИЯ МЕТОДОВ ИНТЕРФЕЙСА ITEMSTORAGE
 	//
 	getAll(offset: number = undefined, limit: number = undefined): Promise<ItemType[]> {
-		return this._model.find({},{},{skip: offset, limit: limit}).exec();
+		return this._model
+			.find({}, { __v: 0 }, { skip: offset, limit: limit })
+			.exec();
 	}
 
 	get(id: ItemType[KeyName]): Promise<ItemType | null> {
-		return this._model.findById(id).exec();
+		return this._model.findById(id, { __v: 0 }).exec();
 	}
 
 	async create(

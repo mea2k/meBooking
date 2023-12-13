@@ -3,13 +3,13 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel, InjectConnection } from '@nestjs/mongoose';
 import { Connection, Model } from 'mongoose';
 import { StorageDb } from '../../../storage/storageDb';
-import { ChatMessage, ChatMessageDocument } from './chatMessageSchema';
+import { ChatMessages, ChatMessageDocument } from './chatMessageSchema';
 import { IChatMessage, IChatMessageDto } from '../support.interfaces';
 
 @Injectable()
 class ChatMessageStorageDb extends StorageDb<ChatMessageDocument, IChatMessageDto, '_id'> {
 	constructor(
-		@InjectModel(ChatMessage.name) private chatMessageModel: Model<ChatMessageDocument>,
+		@InjectModel(ChatMessages.name) private chatMessageModel: Model<ChatMessageDocument>,
 		@InjectConnection() private connection: Connection,
 	) {
 		super(chatMessageModel, '_id');

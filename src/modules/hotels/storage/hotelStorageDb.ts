@@ -33,7 +33,7 @@ class HotelStorageDb extends StorageDb<HotelDocument, IHotelDto, '_id'> {
 	//
 	search(data: SearchHotelParams): Promise<HotelDocument[]> {
 		return this._model
-			.find({ title: { $regex: data.title, $options: 'i' } })
+			.find({ title: { $regex: data.title, $options: 'i' } }, { __v: 0 })
 			.skip(data.offset ? data.offset : 0)
 			.limit(data.limit ? data.limit : 0);
 	}

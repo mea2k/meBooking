@@ -5,6 +5,7 @@ import { Connection, Model } from 'mongoose';
 import { StorageDb } from '../../../storage/storageDb';
 import { HotelRoom, HotelRoomDocument } from './hotelroomSchema';
 import { IHotelRoom, IHotelRoomDto, SearchHotelRoomParams } from '../hotel-rooms.interfaces';
+import { toBool } from 'src/common/functions/type_converters';
 
 @Injectable()
 class HotelRoomStorageDb extends StorageDb<HotelRoomDocument, IHotelRoomDto, '_id'> {
@@ -31,18 +32,23 @@ class HotelRoomStorageDb extends StorageDb<HotelRoomDocument, IHotelRoomDto, '_i
 	//
 	// СПЕЦИФИЧЕСКИЕ МЕТОДЫ
 	//
-	search(data: SearchHotelRoomParams): Promise<HotelRoomDocument[]> {
-		const servicesSearchArray = data.services ? data.services : [];
-		const isEnabledSearchArray =
-			'isEnabled' in data ? [data.isEnabled] : [true, false];
+	search(params: SearchHotelRoomParams): Promise<HotelRoomDocument[]> {
+		const servicesSearchArray = params.services ? params.services : [];
+
+		// формируем фильтр поиска исходя из заполненных полей params
+		const filter = [{}];
+		'title' in params && params.title &&
+			filter.push({ title: new RegExp(params.title, 'gi') });
+		'services' in params && servicesSearchArray.length &&
+			filter.push({ services: { $all: servicesSearchArray } });
+		'isEnabled' in params &&
+			filter.push({ isEnabled: params.isEnabled });
+
+			console.log(params);
 		return this._model
-			.find({
-				title: { $regex: data.title, $options: 'i' },
-				services: { $all: servicesSearchArray },
-				isEnabled: { $in: isEnabledSearchArray },
-			})
-			.skip(data.offset ? data.offset : 0)
-			.limit(data.limit ? data.limit : 0);
+			.find({ $and: filter }, { __v: 0 })
+			.skip(params.offset ? params.offset : 0)
+			.limit(params.limit ? params.limit : 0);
 	}
 }
 
