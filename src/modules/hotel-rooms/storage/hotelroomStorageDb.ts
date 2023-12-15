@@ -39,12 +39,13 @@ class HotelRoomStorageDb extends StorageDb<HotelRoomDocument, IHotelRoomDto, '_i
 		const filter = [{}];
 		'title' in params && params.title &&
 			filter.push({ title: new RegExp(params.title, 'gi') });
+		'hotel' in params && params.hotel &&
+			filter.push({ hotel: params.hotel });
 		'services' in params && servicesSearchArray.length &&
 			filter.push({ services: { $all: servicesSearchArray } });
 		'isEnabled' in params &&
 			filter.push({ isEnabled: params.isEnabled });
 
-			console.log(params);
 		return this._model
 			.find({ $and: filter }, { __v: 0 })
 			.skip(params.offset ? params.offset : 0)

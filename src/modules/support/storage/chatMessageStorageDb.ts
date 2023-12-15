@@ -31,7 +31,10 @@ class ChatMessageStorageDb extends StorageDb<ChatMessageDocument, IChatMessageDt
 	//
 	// получение сообщений по ID чата
 	getMessagesByChat(chatId: IChatMessage['chat']): Promise<IChatMessage[]> {
-		return this._model.find({ chat: chatId }).sort({ sentAt: 1 }).exec();
+		return this._model
+			.find({ chat: chatId }, { __v: 0 })
+			.sort({ sentAt: 1 })
+			.exec();
 	}
 
 	// получение числа непрочитанных сообщений в чате
@@ -52,12 +55,14 @@ class ChatMessageStorageDb extends StorageDb<ChatMessageDocument, IChatMessageDt
 		createdBefore: Date,
 	): Promise<any> {
 		const now = new Date();
-		const res = await this._model.updateMany({
-			'chat': chatId,
-			'author': { $ne: author },
-			'sentAt': { $lte: createdBefore }
+		const res = await this._model.updateMany(
+			{
+				chat: chatId,
+				author: { $ne: author },
+				sentAt: { $lte: createdBefore },
+				readAt: { $exists: false },
 			},
-			{ 'readAt': now }
+			{ readAt: now.toString() },
 		);
 		return Promise.resolve({
 			success: res.acknowledged,

@@ -6,12 +6,12 @@
 # (только клиенты)
 POST {{baseUrl}}/reservations
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImNsaWVudDIiLCJlbWFpbCI6ImNsaWVudDFAMTEucnIiLCJuYW1lIjoiY2xpZW50MiIsInJvbGUiOiJjbGllbnQiLCJfaWQiOjcsImlhdCI6MTcwMjI0ODI2OCwiZXhwIjoxNzAyMjUxODY4fQ.rF076D1B0nh2mA9QzFo1woawFAmcxRD25t5Btmq0Y0w
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1IiwiZW1haWwiOiJjbGllbnQxQDExLnJyIiwibG9naW4iOiJjbGllbnQxIiwibmFtZSI6ImNsaWVudDEiLCJyb2xlIjoiY2xpZW50IiwiaWF0IjoxNzAyNTk1ODEyLCJleHAiOjE3MDI1OTk0MTJ9.nAJIdM5QmcA_Eato6ztT-mN3E581yA_Tu4VmVY7bFtI
 
 {
-	"roomId": "3",
+	"roomId": "5",
 	"dateStart": "2023-12-19",
-	"dateEnd": "2023-12-23",
+	"dateEnd": "2023-12-21",
 	"description": "Профессиональный праздник"
 }
 
@@ -19,13 +19,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImNsaWVud
 # (только менеджеры)
 GET {{baseUrl}}/reservations/
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6Im1hbmFnZXIwMSIsImVtYWlsIjoiZW1haWxAMTEucnIiLCJuYW1lIjoibWFuYWdlcjAxIiwicm9sZSI6Im1hbmFnZXIiLCJfaWQiOjMsImlhdCI6MTcwMjI0Njk5MiwiZXhwIjoxNzAyMjUwNTkyfQ.7KuiJvPNJOz5Z59_yRY-E3-1b0IYxvHCIrFICS8SgoY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI0IiwiZW1haWwiOiJtYWdlcjA1QDExLnJyIiwibG9naW4iOiJtYW5hZ2VyMDUiLCJuYW1lIjoibWFuYWdlcjA1Iiwicm9sZSI6Im1hbmFnZXIiLCJpYXQiOjE3MDI1OTUzMzAsImV4cCI6MTcwMjU5ODkzMH0.ih5ryXOw1mh-fJlTFZXHZPrGeUGWLiqZUubIzsEztUs
 
 ### Список броней пользователя
 # (только менеджеры)
-GET {{baseUrl}}/reservations/user/7
+GET {{baseUrl}}/reservations/user/5
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6Im1hbmFnZXIwMSIsImVtYWlsIjoiZW1haWxAMTEucnIiLCJuYW1lIjoibWFuYWdlcjAxIiwicm9sZSI6Im1hbmFnZXIiLCJfaWQiOjMsImlhdCI6MTcwMjI0Njk5MiwiZXhwIjoxNzAyMjUwNTkyfQ.7KuiJvPNJOz5Z59_yRY-E3-1b0IYxvHCIrFICS8SgoY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI0IiwiZW1haWwiOiJtYWdlcjA1QDExLnJyIiwibG9naW4iOiJtYW5hZ2VyMDUiLCJuYW1lIjoibWFuYWdlcjA1Iiwicm9sZSI6Im1hbmFnZXIiLCJpYXQiOjE3MDI1OTUzMzAsImV4cCI6MTcwMjU5ODkzMH0.ih5ryXOw1mh-fJlTFZXHZPrGeUGWLiqZUubIzsEztUs
 
 ### Информация по конкретной брони
 GET {{baseUrl}}/reservations/1
@@ -33,21 +33,21 @@ Content-Type: application/json
 
 ### Обновление брони
 # (только клиент-собственник или менеджер)
-PUT {{baseUrl}}/reservations/1
+PUT {{baseUrl}}/reservations/2
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6Im1hbmFnZXIwMSIsImVtYWlsIjoiZW1haWxAMTEucnIiLCJuYW1lIjoibWFuYWdlcjAxIiwicm9sZSI6Im1hbmFnZXIiLCJfaWQiOjMsImlhdCI6MTcwMjI0Njk5MiwiZXhwIjoxNzAyMjUwNTkyfQ.7KuiJvPNJOz5Z59_yRY-E3-1b0IYxvHCIrFICS8SgoY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI0IiwiZW1haWwiOiJtYWdlcjA1QDExLnJyIiwibG9naW4iOiJtYW5hZ2VyMDUiLCJuYW1lIjoibWFuYWdlcjA1Iiwicm9sZSI6Im1hbmFnZXIiLCJpYXQiOjE3MDI1OTUzMzAsImV4cCI6MTcwMjU5ODkzMH0.ih5ryXOw1mh-fJlTFZXHZPrGeUGWLiqZUubIzsEztUs
 
 {
-	"dateStart": "2023-12-22T00:00:00.000Z",
-	"dateEnd": "2023-12-24T00:00:00.000Z",
+	"dateStart": "2023-12-18T00:00:00.000Z",
+	"dateEnd": "2023-12-22T00:00:00.000Z",
 	"description": "+1 человек"
 }
 
 ### Удаление брони
 # (только клиент-собственник или менеджер)
-DELETE {{baseUrl}}/reservations/16
+DELETE {{baseUrl}}/reservations/1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6Im1hbmFnZXIwMSIsImVtYWlsIjoiZW1haWxAMTEucnIiLCJuYW1lIjoibWFuYWdlcjAxIiwicm9sZSI6Im1hbmFnZXIiLCJfaWQiOjMsImlhdCI6MTcwMjI0Njk5MiwiZXhwIjoxNzAyMjUwNTkyfQ.7KuiJvPNJOz5Z59_yRY-E3-1b0IYxvHCIrFICS8SgoY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI0IiwiZW1haWwiOiJtYWdlcjA1QDExLnJyIiwibG9naW4iOiJtYW5hZ2VyMDUiLCJuYW1lIjoibWFuYWdlcjA1Iiwicm9sZSI6Im1hbmFnZXIiLCJpYXQiOjE3MDI1OTUzMzAsImV4cCI6MTcwMjU5ODkzMH0.ih5ryXOw1mh-fJlTFZXHZPrGeUGWLiqZUubIzsEztUs
 
 
 ###

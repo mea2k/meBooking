@@ -47,7 +47,6 @@ export class MongoExceptionFilter implements ExceptionFilter {
 				break;
 			}
 		}
-		console.log('INSIDE')
 		response.status(error.statusCode).json(error);
 		//throw new HttpException((exception as Error).message, HttpStatus.BAD_REQUEST);
 		//throe new BadRequestException((exception as Error).message);

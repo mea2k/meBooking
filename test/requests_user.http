@@ -7,8 +7,8 @@ POST {{baseUrl}}/users/admin/register
 Content-Type: application/json
 
 {
-  "login": "admin01",
-  "email": "email01@11.rr",
+  "login": "admin111",
+  "email": "email111@11.rr",
   "firstName": "admin",
   "password1": "123",
   "password2": "123",
@@ -42,20 +42,20 @@ Content-Type: application/json
 }
 
 ### Получение информации о пользователе
-GET {{baseUrl}}/users/4
+GET {{baseUrl}}/users/6
 Content-Type: application/json
 
 ### Поиск пользователей-админов
 # (доступно только админам)
-GET {{baseUrl}}/users/admin?name=admin
+GET {{baseUrl}}/users/admin?name=admin0
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIxIiwiZW1haWwiOiJlbWFpbEAxMS5yciIsImxvZ2luIjoiYWRtaW4wMiIsIm5hbWUiOiJhZG1pbjAyIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAyNTA0NzcxLCJleHAiOjE3MDI1MDgzNzF9.85gcg0SuqoNLMCWvE7S12BBjn0xlIyZ2rlTfcex3dQA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIxIiwiZW1haWwiOiJlbWFpbEAxMS5yciIsImxvZ2luIjoiYWRtaW4wMiIsIm5hbWUiOiJhZG1pbjAyIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAyNTk0NzEzLCJleHAiOjE3MDI1OTgzMTN9.8QUqNql36Fh7PhxYjmwxKKmqCf8b538RC_QDbUG7qMM
 
 ### Поиск пользователей-менеджеров
 # (доступно только менеджерам)
 GET {{baseUrl}}/users/manager?offset=1&limit=2
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI0IiwiZW1haWwiOiJtYWdlcjA1QDExLnJyIiwibG9naW4iOiJtYW5hZ2VyMDUiLCJuYW1lIjoibWFuYWdlcjA1Iiwicm9sZSI6Im1hbmFnZXIiLCJpYXQiOjE3MDI1MDY3ODEsImV4cCI6MTcwMjUxMDM4MX0.6GYrwUGaC4k02kfzT5T4e9yqtRcrwaTXMcs7IPZG3X0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6Im1hbmFnZXIwMiIsImVtYWlsIjoiZW1haWxAMTEucnIiLCJuYW1lIjoibWFuYWdlcjAyIiwicm9sZSI6Im1hbmFnZXIiLCJfaWQiOjQsImlhdCI6MTcwMjU5MDA2MywiZXhwIjoxNzAyNTkzNjYzfQ.dHBH64OgTTJUWoi_1Kp2reebNVMgNKeWhTiIqJ5xIMo
 
 ### Аутентификация
 POST {{baseUrl}}/users/login
@@ -99,5 +99,5 @@ Content-Type: application/json
 # (доступен только после аутентификации - по токену)
 GET {{baseUrl}}/users/profile
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIxIiwiZW1haWwiOiJlbWFpbEAxMS5yciIsImxvZ2luIjoiYWRtaW4wMiIsIm5hbWUiOiJhZG1pbjAyIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAyNTA0NzcxLCJleHAiOjE3MDI1MDgzNzF9.85gcg0SuqoNLMCWvE7S12BBjn0xlIyZ2rlTfcex3dQA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIxIiwiZW1haWwiOiJlbWFpbEAxMS5yciIsImxvZ2luIjoiYWRtaW4wMiIsIm5hbWUiOiJhZG1pbjAyIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAyNTk0NzEzLCJleHAiOjE3MDI1OTgzMTN9.8QUqNql36Fh7PhxYjmwxKKmqCf8b538RC_QDbUG7qMM
 

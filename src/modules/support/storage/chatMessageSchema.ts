@@ -44,7 +44,7 @@ export class ChatMessages implements IChatMessage {
 	text: IChatMessage['text'];
 
 	@Prop({
-		type: Boolean,
+		type: Date,
 	})
 	readAt: IChatMessage['readAt'];
 }

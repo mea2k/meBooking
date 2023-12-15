@@ -6,7 +6,7 @@
 # (только админы)
 POST {{baseUrl}}/hotels/register
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIxIiwiZW1haWwiOiJlbWFpbEAxMS5yciIsImxvZ2luIjoiYWRtaW4wMiIsIm5hbWUiOiJhZG1pbjAyIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAyNTA3MDA0LCJleHAiOjE3MDI1MTA2MDR9.Gstnv81K8Xgf83NTJMF7JRVR9hIKzEJW--ESG1HnYU4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIxIiwiZW1haWwiOiJlbWFpbEAxMS5yciIsImxvZ2luIjoiYWRtaW4wMiIsIm5hbWUiOiJhZG1pbjAyIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAyNTk0NzEzLCJleHAiOjE3MDI1OTgzMTN9.8QUqNql36Fh7PhxYjmwxKKmqCf8b538RC_QDbUG7qMM
 
 {
 	"title": "Гостиница TopHotel",
@@ -17,13 +17,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIxIiwiZW1ha
 # (только менеджеры)
 POST {{baseUrl}}/hotels/rooms
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI0IiwiZW1haWwiOiJtYWdlcjA1QDExLnJyIiwibG9naW4iOiJtYW5hZ2VyMDUiLCJuYW1lIjoibWFuYWdlcjA1Iiwicm9sZSI6Im1hbmFnZXIiLCJpYXQiOjE3MDI1MDczMDMsImV4cCI6MTcwMjUxMDkwM30.BggWi7UUU9q4MsjUOCBs01UNUBGk5T079oqr1k88hiM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI0IiwiZW1haWwiOiJtYWdlcjA1QDExLnJyIiwibG9naW4iOiJtYW5hZ2VyMDUiLCJuYW1lIjoibWFuYWdlcjA1Iiwicm9sZSI6Im1hbmFnZXIiLCJpYXQiOjE3MDI1OTQ5MDQsImV4cCI6MTcwMjU5ODUwNH0.WEt53yqE3k7OoBXsJwWrWfkcS6VXExV2f4EI3FNJSIo
 
 {
-	"hotel": "3",
+	"hotel": "2",
 	"title": "double",
-	"description": "Дабл с балконом",
-	"services": ["ванная", "2-спальная кровать", "фен", "балкон"]
+	"description": "дабл с окном",
+	"services": ["душ", "2 1-спальных кровати", "фен", "халат"]
 }
 
 ### 2й пример
@@ -43,12 +43,12 @@ GET {{baseUrl}}/hotels/
 Content-Type: application/json
 
 ### Информация по конкретной гостинице
-GET {{baseUrl}}/hotels/2
+GET {{baseUrl}}/hotels/3
 Content-Type: application/json
 
 ### Список номеров по конкретной гостинице
 ### (только доступные - isEnabled=true)
-GET {{baseUrl}}/hotels/3/rooms?offset=0&limit=0
+GET {{baseUrl}}/hotels/2/rooms?offset=0&limit=10
 Content-Type: application/json
 
 ### Информация по конкретному номеру

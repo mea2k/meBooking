@@ -66,7 +66,7 @@ export class UsersController {
 		params: SearchUserParamsDto,
 	) {
 		params.role = UserRoleType.MANAGER;
-		console.log(params);
+		//console.log(params);
 		return this.usersService.search(params);
 	}
 

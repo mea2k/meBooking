@@ -81,11 +81,14 @@ export class ReservationsService {
 	 */
 	async update(id: string, item: IReservationCreateUpdateDto) {
 		// получаем полную запись и обновляем значение новых полей
-		let fullItem = await this._storage.get(this._storage.convertId(id));
-		fullItem = {
-			...fullItem,
-			...item,
+		const baseItem = await this._storage.get(this._storage.convertId(id));
+
+		// для Mongo надо вернуть ._doc
+		const fullItem = {
+			...( (baseItem as any)._doc ? (baseItem as any)._doc : baseItem ),
+			...item
 		};
+
 		// проверка, что на данные даты номер не занят
 		if (
 			item.dateStart &&

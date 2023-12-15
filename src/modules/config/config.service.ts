@@ -1,5 +1,6 @@
 import { Injectable, Scope } from '@nestjs/common';
 import { IConfig } from './config.interfaces';
+import { KeyObject } from 'crypto';
 
 @Injectable({ scope: Scope.DEFAULT })
 export class ConfigService {
@@ -14,7 +15,7 @@ export class ConfigService {
 			STORAGE_TYPE: 'file',
 
 			// ПОРТ приложения
-			PORT: 3000,
+			APP_PORT: 3000,
 
 			// ПУТИ ДЛЯ ХРАНЕНИЯ ДАННЫХ
 			// И ЗАГРУЗКИ ФАЙЛОВ
@@ -39,7 +40,7 @@ export class ConfigService {
 			CHATMESSAGES_FILE: 'chat_messages.json',
 
 			// КОНСТАНТЫ ДЛЯ ГЕНЕРАЦИИ JWT
-			JWT_SECRET: 'CHANGE_ME',
+			JWT_SECRET: '  ',
 			JWT_EXPIRE: '1h',
 		};
 
@@ -50,6 +51,12 @@ export class ConfigService {
 			...this._config,
 			...process.env,
 		};
+
+		// сохраняем все обратно в process.env
+		for (let key in this._config) {
+			process.env[key] = this._config[key];
+		}
+		//console.log(process.env.MONGO_URL)
 	}
 
 	/** ПОЛУЧЕНИЕ ЗНАЧЕНИЕ НАСТРОЕК ПО КЛЮЧУ

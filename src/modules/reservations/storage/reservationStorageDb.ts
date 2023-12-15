@@ -31,15 +31,20 @@ class ReservationStorageDb extends StorageDb<ReservationDocument, IReservationDt
 	//
 	// СПЕЦИФИЧЕСКИЕ МЕТОДЫ
 	//
-	search(data: SearchReservationParams): Promise<ReservationDocument[]> {
+	search(params: SearchReservationParams): Promise<ReservationDocument[]> {
+		// формируем фильтр поиска исходя из заполненных полей params
+		const filter = [{}];
+		'userId' in params && params.userId &&
+			filter.push({ userId: params.userId });
+		'dateStart' in params && params.dateStart &&
+			filter.push({ dateStart: { $gte: params.dateStart } });
+		'dateEnd' in params && params.dateEnd &&
+			filter.push({ dateEnd: { $lte: params.dateEnd } });
+
 		return this._model
-			.find({
-				userId: { $in: [data.userId]},
-				dateStart: { $gte: data.dateStart ? data.dateStart : 0 },
-				dateEnd: { $lte: data.dateEnd ? data.dateEnd : -1 },
-			})
-			.skip(data.offset ? data.offset : 0)
-			.limit(data.limit ? data.limit : 0);
+			.find({ $and: filter }, { __v: 0 })
+			.skip(params.offset ? params.offset : 0)
+			.limit(params.limit ? params.limit : 0);
 	}
 
 	searchByUser(userId: IReservation['userId']): Promise<ReservationDocument[]> {

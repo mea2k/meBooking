@@ -8,6 +8,6 @@ async function bootstrap() {
 	// используем глобально перехватчик Mongo-ошибок
 	app.useGlobalFilters(new MongoExceptionFilter());
 
-	await app.listen(3000);
+	await app.listen(process.env.APP_PORT || 3000);
 }
 bootstrap();

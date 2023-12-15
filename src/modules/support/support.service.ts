@@ -32,9 +32,11 @@ export class SupportService {
 		const chatId = this._chatStorage.convertId(id);
 		const chat = await this._chatStorage.get(chatId);
 		const chatMessages = await this._messagesStorage.getMessagesByChat(chatId);
+
+		// для Mongo надо вернуть ._doc
 		return {
-			...chat,
-			messages: chatMessages
+			...((chat as any)._doc ? (chat as any)._doc : chat),
+			messages: chatMessages,
 		};
 	}
 
@@ -153,7 +155,7 @@ export class SupportService {
 	searchChats(data: ISearchChatParams): Promise<ISupportChat[]> {
 		return this._chatStorage.search(
 			this._chatStorage.convertId(data.user),
-			('isActive in data') ? data.isActive : undefined 
+			('isActive in data') ? data.isActive : undefined
 		)
 	}
 

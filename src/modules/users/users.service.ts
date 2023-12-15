@@ -41,7 +41,6 @@ export class UsersService {
 		try {
 			return this._storage.create(item);
 		} catch(e) {
-			console.log('here')
 			throw new HttpException((e as Error).message, HttpStatus.BAD_REQUEST);
 		}
 	}

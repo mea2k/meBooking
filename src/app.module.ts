@@ -14,8 +14,8 @@ import { RolesGuard } from './modules/auth/guards/role.guard';
 
 @Module({
 	imports: [
-		UsersModule,
 		ConfigModule,
+		UsersModule,
 		HotelsModule,
 		HotelRoomsModule,
 		ReservationsModule,

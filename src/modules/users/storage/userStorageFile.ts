@@ -39,6 +39,13 @@ class UserStorageFile extends StorageFile<IUser, IUserDto, '_id'> {
 			throw new BadRequestException(`Login ${item.login} already exists!`);
 			return null;
 		}
+		// проверка, что такого email-а еще нет
+		const yetAnotherUser = await this.getByEmail(item.email);
+		if (yetAnotherUser) {
+			throw new BadRequestException(`Email ${item.email} is already in use!`);
+			return null;
+		}
+
 		item.passwordHash = await hashPassword(item.login, item.passwordHash);
 		return super.create(item);
 	}
@@ -62,18 +69,28 @@ class UserStorageFile extends StorageFile<IUser, IUserDto, '_id'> {
 	search(params: SearchUserParams): Promise<IUser[]> {
 		return new Promise<IUser[]>((resolve) =>
 			resolve(this._storage.filter((e) => 
-				( (params.name ? e['name'] == params.name : false) ||
-				  (params.email ? e['email'] == params.email : false) ||
-				  (params.contactPhone ? e['contactPhone'] == params.contactPhone : false) ||
-				  (!params.name && !params.email && !params.contactPhone && params.role ? true : false) ) &&
-				( params.role ? e['role'] == params.role : true ),
-			).slice(
-				params.offset, 
-				params.limit
-					? params.offset
-						? params.offset + params.limit
-						: params.limit
-					: undefined,
+						( (params.name
+							? new RegExp(params.name, 'gi').test(e['name'])
+							: false) ||
+						  (params.email
+								? new RegExp(params.email, 'gi').test(e['email'])
+								: false) ||
+						  (params.contactPhone
+								? new RegExp(params.contactPhone, 'gi').test(e['contactPhone'])
+								: false) ||
+				  		  ( (!params.name && !params.email && !params.contactPhone && params.role) 
+						 		? true 
+								: false) ) &&
+						  ( params.role 
+								? e['role'] == params.role 
+								: true ),
+						).slice(
+							params.offset, 
+							params.limit 
+								? params.offset 
+									? params.offset + params.limit 
+									: params.limit
+								: undefined,
 			)
 		));
 	}
