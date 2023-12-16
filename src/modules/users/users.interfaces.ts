@@ -32,9 +32,10 @@ export interface IUser {
  *   email:         string   - email пользователя (обязательный параметр)
  *   login:         string   - логин пользователя (обязательный параметр)
  *   name: 		    string   - имя пользователя
+ *   password1:     string   - пароль - строка 1 (обязательный параметр)
+ *   password2:     string   - пароль - строка 2 (обязательный параметр)
  *   contactPhone?: string   - контактный номер телефона
  *   role?:         string   - роль пользователя (client, manager, admin)
- *   passwordHash?: string   - хеш пароля (заполняется на основе паролей password1 и password2)
  *
  * Обязательным является только поля email, login, password
  */

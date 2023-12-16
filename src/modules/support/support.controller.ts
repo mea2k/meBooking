@@ -14,7 +14,7 @@ export class SupportController {
 	// (доступно только клиентам)
 	@Roles(UserRoleType.CLIENT)
 	@Post('')
-	searchPost(
+	createChat(
 		@Body() data: ISupportChatCreateUpdateDto,
 		@Request() req,
 	): Promise<ISupportChat[]> {

@@ -78,8 +78,8 @@ export class UsersController {
 
 	// УДАЛЕНИЕ ПОЛЬЗОВАТЕЛЯ
 	// (доступно только админам)
+	@Roles(UserRoleType.ADMIN)
 	@Delete(':id')
-	@UseGuards(AuthGuard, OwnerGuard)
 	async delete(@Param('id') id: string): Promise<boolean> {
 		return this.usersService.delete(id);
 	}
