@@ -1,7 +1,6 @@
 import { Document } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { IUser } from '../users.interfaces';
-import * as bcrypt from 'bcrypt';
 import { compareHash, hashPassword } from 'src/common/functions/hash';
 
 export type UserDocument = User & Document;
@@ -67,7 +66,10 @@ UserSchema.pre('save', async function (next: any) {
 	}
 
 	try {
-		thisObj.passwordHash = await hashPassword(thisObj.login, thisObj.passwordHash); 
+		thisObj.passwordHash = await hashPassword(
+			thisObj.login,
+			thisObj.passwordHash,
+		);
 		return next();
 	} catch (e) {
 		return next(e);
@@ -78,6 +80,5 @@ UserSchema.methods.validatePassword = async function (pass: string) {
 	const thisObj: IUser = this as IUser;
 	return await compareHash(thisObj.login, pass, thisObj.passwordHash);
 };
-
 
 export default UserSchema;

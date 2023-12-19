@@ -1,12 +1,10 @@
 // eslint-disable-next-line prettier/prettier
-import { IsBoolean, IsDate, IsNumber, IsNumberString, IsOptional } from 'class-validator';
+import { IsNumber, IsOptional } from 'class-validator';
 import { ArgumentMetadata, Injectable, PipeTransform } from '@nestjs/common';
 import { Transform } from 'class-transformer';
 import { SearchUserParams } from '../users.interfaces';
-import { ToNumberOptions, UserRoleType } from 'src/common/interfaces/types';
+import { UserRoleType } from 'src/common/interfaces/types';
 import { toLowerCase, toNumber } from 'src/common/functions/type_converters';
-
-
 
 export class SearchUserParamsDto implements SearchUserParams {
 	@Transform(({ value }) => toNumber(value, { default: 0, min: 0 }))
@@ -34,11 +32,9 @@ export class SearchUserParamsDto implements SearchUserParams {
 	public role: UserRoleType;
 }
 
-
 @Injectable()
 export class SearchUserParamsValidator implements PipeTransform {
 	transform(data: SearchUserParams | any, metadata: ArgumentMetadata) {
-
 		// копируем все необходимые параметры
 		// или заполняем значениями по умолчанию
 		const result: SearchUserParams = { ...data };

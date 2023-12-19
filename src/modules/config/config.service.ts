@@ -1,6 +1,5 @@
 import { Injectable, Scope } from '@nestjs/common';
 import { IConfig } from './config.interfaces';
-import { KeyObject } from 'crypto';
 
 @Injectable({ scope: Scope.DEFAULT })
 export class ConfigService {
@@ -74,4 +73,3 @@ export class ConfigService {
 		return this._config;
 	}
 }
-

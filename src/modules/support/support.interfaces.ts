@@ -64,7 +64,7 @@ export interface ISupportChatCreateUpdateDto {
  *   isActive:	 boolean  - чат активный? (можно в него писать сообщения)
  *
  * Обязательными являются только поля user, text
- * Для обновления обязательных полей нет. 
+ * Для обновления обязательных полей нет.
  */
 export interface ISupportChatDto {
 	user?: IDType;

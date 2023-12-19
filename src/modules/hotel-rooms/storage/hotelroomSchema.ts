@@ -1,6 +1,5 @@
 import { Document } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { IDType } from 'src/common/interfaces/types';
 import { IHotelRoom } from '../hotel-rooms.interfaces';
 import { Hotel } from 'src/modules/hotels/storage/hotelSchema';
 
@@ -9,7 +8,7 @@ export type HotelRoomDocument = HotelRoom & Document;
 @Schema()
 export class HotelRoom implements IHotelRoom {
 	@Prop({
-		type: String, // TODO: Сделать универсально!!!
+		type: String, // TODO: Сделать универсально (отложим на перспективу)
 		//unique: true, // не надо, _id и так unique
 		required: true,
 	})

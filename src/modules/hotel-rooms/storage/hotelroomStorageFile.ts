@@ -1,11 +1,16 @@
 import * as fs from 'fs';
 import { Injectable } from '@nestjs/common';
 import { StorageFile } from '../../../storage/storageFile';
-import { IHotelRoom, IHotelRoomDto, SearchHotelRoomParams } from '../hotel-rooms.interfaces';
 import { ConfigService } from '../../config/config.service';
+// eslint-disable-next-line prettier/prettier
+import { IHotelRoom, IHotelRoomDto, SearchHotelRoomParams } from '../hotel-rooms.interfaces';
 
 @Injectable()
-class HotelRoomStorageFile extends StorageFile<IHotelRoom, IHotelRoomDto, '_id'> {
+class HotelRoomStorageFile extends StorageFile<
+	IHotelRoom,
+	IHotelRoomDto,
+	'_id'
+> {
 	constructor(config: ConfigService) {
 		// Проверка на существование пути и создание его
 		if (!fs.existsSync(config.get('DATA_PATH'))) {
@@ -34,23 +39,32 @@ class HotelRoomStorageFile extends StorageFile<IHotelRoom, IHotelRoomDto, '_id'>
 	search(params: SearchHotelRoomParams): Promise<IHotelRoom[]> {
 		//console.log(params)
 		return new Promise<IHotelRoom[]>((resolve) =>
-			resolve(this._storage
-				.filter((e) => 
-					new RegExp(params.title, 'gi').test(e.title) &&
-					(params.hotel ? e.hotel == params.hotel : true) &&
-					( (params.services?.length && e.services?.length) 
-						? params.services.every((s) => e.services.indexOf(s) !== -1) 
-						: true) &&
-					( (('isEnabled' in params) && (params.isEnabled !== undefined)) ? e.isEnabled === true : true )
-				)
-				.slice(
-					params.offset ? params.offset : 0,
-					params.limit
-						? params.offset
-							? params.offset + params.limit
-							: params.limit
-						: undefined,
-				)
+			resolve(
+				this._storage
+					.filter(
+						(e) =>
+							(params.title
+								? new RegExp(params.title, 'gi').test(e.title)
+								: true) &&
+							(params.hotel ? e.hotel == params.hotel : true) &&
+							(params.services?.length && e.services?.length
+								? params.services.every(
+										(s) => e.services.indexOf(s) !== -1,
+								  )
+								: true) &&
+							('isEnabled' in params &&
+							params.isEnabled !== undefined
+								? e.isEnabled === true
+								: true),
+					)
+					.slice(
+						params.offset ? params.offset : 0,
+						params.limit
+							? params.offset
+								? params.offset + params.limit
+								: params.limit
+							: undefined,
+					),
 			),
 		);
 	}

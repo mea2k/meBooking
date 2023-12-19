@@ -1,6 +1,5 @@
 import 'reflect-metadata';
 import * as fs from 'fs';
-import { ItemStorage } from '../common/interfaces/itemStorage';
 import { Storage } from './storage';
 
 // АБСТРАКТНЫЙ ШАБЛОННЫЙ КЛАСС ДЛЯ ХРАНЕНИЯ ОБЪЕКТОВ В JSON-ФАЙЛЕ
@@ -12,9 +11,11 @@ import { Storage } from './storage';
 //					  (используется для CREATE и UPDATE)
 //		KeyName - тип ключевого поля (которое является идентифицирующим для объекта)
 //					  (один из аттрибутов ItemType)
-abstract class StorageFile<ItemType, ItemTypeDto, KeyName extends keyof ItemType> 
-	extends Storage<ItemType, ItemTypeDto, KeyName>
-{
+abstract class StorageFile<
+	ItemType,
+	ItemTypeDto,
+	KeyName extends keyof ItemType,
+> extends Storage<ItemType, ItemTypeDto, KeyName> {
 	// массив объектов типа ItemType
 	protected _storage: Array<ItemType> = [];
 	// имя файла, в котором хранится массив объектов
@@ -61,8 +62,11 @@ abstract class StorageFile<ItemType, ItemTypeDto, KeyName extends keyof ItemType
 	// РЕАЛИЗАЦИЯ МЕТОДОВ ИНТЕРФЕЙСА ITEMSTORAGE
 	//
 
-	getAll(offset: number = undefined, limit: number = undefined): Promise<ItemType[]> {
-		return new Promise<ItemType[]>((resolve) => 
+	getAll(
+		offset: number = undefined,
+		limit: number = undefined,
+	): Promise<ItemType[]> {
+		return new Promise<ItemType[]>((resolve) =>
 			resolve(
 				this._storage.slice(
 					offset ? offset : 0,

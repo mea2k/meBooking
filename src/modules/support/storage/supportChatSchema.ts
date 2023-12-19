@@ -1,6 +1,6 @@
 import { Document } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { ISupportChat, IChatMessage } from '../support.interfaces';
+import { ISupportChat } from '../support.interfaces';
 import { User } from 'src/modules/users/storage/userSchema';
 
 export type SupportChatDocument = SupportChat & Document;

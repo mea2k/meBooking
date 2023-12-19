@@ -3,17 +3,14 @@ import { Controller, Get, Post, Body, Delete, Request, Param, Query, ValidationP
 import { IUser, IUserDto } from './users.interfaces';
 import { UsersService } from './users.service';
 import { UsersDtoValidator } from './validators/usersDtoValidator';
-import { IDTypeValidator } from './validators/IDTypeValidator';
 import { UserRoleType } from 'src/common/interfaces/types';
-import { SearchUserParamsDto, SearchUserParamsValidator } from './validators/searchUserParamsValidator';
+import { SearchUserParamsDto } from './validators/searchUserParamsValidator';
 import { AuthGuard } from '../auth/guards/auth.guard';
-import { RolesGuard } from '../auth/guards/role.guard';
 import { Roles } from 'src/common/decorators/roles.decorator';
-import { OwnerGuard } from './guards/owner.guard';
 
 @Controller('api/users')
 export class UsersController {
-	constructor(private readonly usersService: UsersService) { }
+	constructor(private readonly usersService: UsersService) {}
 
 	// ПРОФИЛЬ ПОЛЬЗОВАТЕЛЯ
 	// (только после аутентификации)

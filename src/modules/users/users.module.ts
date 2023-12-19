@@ -19,8 +19,8 @@ import { JwtService } from '@nestjs/jwt';
 		// подключаем MongooseModule и устанавливаем соединение с базой
 		// иначе подключаем BookStorageFile
 		...(process.env.STORAGE_TYPE === 'mongo'
-			?  [
-				MongooseModule.forRoot(
+			? [
+					MongooseModule.forRoot(
 						process.env.MONGO_URL +
 							process.env.MONGO_DATABASE +
 							'?authSource=admin',

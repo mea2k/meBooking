@@ -1,6 +1,6 @@
 // eslint-disable-next-line prettier/prettier
 import { ArgumentMetadata, BadRequestException, Injectable, PipeTransform } from '@nestjs/common';
-import { DEFAULT_USER_ROLE, UserRoleType } from 'src/common/interfaces/types';
+import { DEFAULT_USER_ROLE } from 'src/common/interfaces/types';
 import { IUserCreateDto, IUserDto } from '../users.interfaces';
 
 // Проверка на шаблон строки:
@@ -17,21 +17,18 @@ const checkEmail = (str: any) => {
 export class UsersDtoValidator implements PipeTransform {
 	transform(data: IUserCreateDto | any, metadata: ArgumentMetadata) {
 		// проверка на наличие обязательных полей
-
 		// (email)
 		if (!data.email || data.email === undefined || data.email == '') {
 			throw new BadRequestException('Email expected!');
 		}
-
+		// формат email *@*.*
 		if (checkEmail(data.email)) {
 			throw new BadRequestException('Not valid Email!');
 		}
-
 		// (login)
 		if (!data.login || data.login === undefined || data.login == '') {
 			throw new BadRequestException('Login expected!');
 		}
-
 		// (password1 && password2)
 		if (
 			!data.password1 ||
@@ -43,7 +40,7 @@ export class UsersDtoValidator implements PipeTransform {
 		) {
 			throw new BadRequestException('Both passwords expected!');
 		}
-
+		// равеноство password1 == password2
 		if (data.password1 !== data.password2) {
 			throw new BadRequestException('Passwords are not equal!');
 		}

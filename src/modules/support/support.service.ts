@@ -3,7 +3,8 @@ import { SupportChatStorageFile } from './storage/supportChatStorageFile';
 import { SupportChatStorageDb } from './storage/supportChatStorageDb';
 import { ChatMessageStorageFile } from './storage/chatMessageStorageFile';
 import { ChatMessageStorageDb } from './storage/chatMessageStorageDb';
-import { CHATMESSAGES_STORAGE, IChatMessage, IChatMessageDto, IMarkChatMessageAsRead, ISearchChatParams, ISendChatMessageDto, ISupportChat, ISupportChatCreateUpdateDto, ISupportChatDto, SUPPORTCHAT_STORAGE } from './support.interfaces';
+// eslint-disable-next-line prettier/prettier
+import { CHATMESSAGES_STORAGE, IChatMessageDto, IMarkChatMessageAsRead, ISearchChatParams, ISendChatMessageDto, ISupportChat, ISupportChatCreateUpdateDto, ISupportChatDto, SUPPORTCHAT_STORAGE } from './support.interfaces';
 
 @Injectable()
 export class SupportService {
@@ -31,11 +32,18 @@ export class SupportService {
 		// конвертируем ID к правильному типу
 		const chatId = this._chatStorage.convertId(id);
 		const chat = await this._chatStorage.get(chatId);
-		const chatMessages = await this._messagesStorage.getMessagesByChat(chatId);
+		const chatMessages = await this._messagesStorage.getMessagesByChat(
+			chatId,
+		);
 
+		// [UPDATED] теперь не надо - поскольку используется lean()
 		// для Mongo надо вернуть ._doc
+		// return {
+		// 	...((chat as any)._doc ? (chat as any)._doc : chat),
+		// 	messages: chatMessages,
+		// };
 		return {
-			...((chat as any)._doc ? (chat as any)._doc : chat),
+			chat: chat,
 			messages: chatMessages,
 		};
 	}
@@ -63,7 +71,7 @@ export class SupportService {
 				chat: newChat._id,
 				text: data.text,
 				sentAt: new Date(),
-			}
+			};
 			const message = await this._messagesStorage.create(msgItem);
 			return newChat;
 		}
@@ -115,7 +123,10 @@ export class SupportService {
 		};
 
 		// конвертируем ID к правильному типу
-		return this._messagesStorage.update(this._messagesStorage.convertId(id), item);
+		return this._messagesStorage.update(
+			this._messagesStorage.convertId(id),
+			item,
+		);
 	}
 
 	/** УДАЛЕНИЕ ВЫБРАННОГО ЧАТА
@@ -155,14 +166,14 @@ export class SupportService {
 	searchChats(data: ISearchChatParams): Promise<ISupportChat[]> {
 		return this._chatStorage.search(
 			this._chatStorage.convertId(data.user),
-			('isActive in data') ? data.isActive : undefined
-		)
+			'isActive in data' ? data.isActive : undefined,
+		);
 	}
 
 	/** ОТМЕТКА СООБЩЕНИЙ О ПРОЧТЕНИИ
 	 * @constructor
 	 * @params data    - параметры ({chatId, authir, createdBefore})
-	 * 
+	 *
 	 * @returns Promise<{}>
 	 */
 	markMessagesAsRead(data: IMarkChatMessageAsRead): Promise<any> {

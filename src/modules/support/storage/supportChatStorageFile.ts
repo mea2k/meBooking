@@ -5,7 +5,11 @@ import { StorageFile } from '../../../storage/storageFile';
 import { ISupportChat, ISupportChatDto } from '../support.interfaces';
 
 @Injectable()
-class SupportChatStorageFile extends StorageFile<ISupportChat, ISupportChatDto, '_id'> {
+class SupportChatStorageFile extends StorageFile<
+	ISupportChat,
+	ISupportChatDto,
+	'_id'
+> {
 	constructor(config: ConfigService) {
 		// Проверка на существование пути и создание его
 		if (!fs.existsSync(config.get('DATA_PATH'))) {
@@ -37,7 +41,9 @@ class SupportChatStorageFile extends StorageFile<ISupportChat, ISupportChatDto, 
 		isActive: boolean = undefined,
 	): Promise<ISupportChat[]> {
 		return new Promise<ISupportChat[] | []>((resolve) =>
-			resolve(this._storage.filter((e) => 
+			resolve(
+				this._storage.filter(
+					(e) =>
 						e.user == userId &&
 						e.isActive ===
 							(isActive == undefined ? e.isActive : isActive),

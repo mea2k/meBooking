@@ -6,7 +6,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Reservation, ReservationSchema } from './storage/ReservationSchema';
 import { ReservationStorageDb } from './storage/reservationStorageDb';
 import { ReservationStorageFile } from './storage/reservationStorageFile';
-import { RESERVATIONS_STORAGE } from './Reservations.interfaces';
+import { RESERVATIONS_STORAGE } from './reservations.interfaces';
 import { UsersModule } from '../users/users.module';
 import { HotelsModule } from '../hotels/hotels.module';
 import { HotelRoomsModule } from '../hotel-rooms/hotel-rooms.module';

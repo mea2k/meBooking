@@ -25,7 +25,6 @@ export interface IUser {
 	role: UserRoleType;
 }
 
-
 /** ИНТЕРФЕЙС - ДАННЫЕ_ИЗ_ФОРМЫ_ДЛЯ_СОЗДАНИЯ_ПОЛЬЗОВАТЕЛЯ
  * Определяет информацию, на основании которой создается объект ПОЛЬЗОВАТЕЛЬ:
  * (берется из формы создания)
@@ -86,4 +85,4 @@ export interface SearchUserParams {
 	role?: UserRoleType;
 	offset?: number;
 	limit?: number;
-} 
+}

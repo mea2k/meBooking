@@ -36,20 +36,23 @@ class UserStorageFile extends StorageFile<IUser, IUserDto, '_id'> {
 		// проверка, что такого логина еще нет
 		const anotherUser = await this.getByLogin(item.login);
 		if (anotherUser) {
-			throw new BadRequestException(`Login ${item.login} already exists!`);
+			throw new BadRequestException(
+				`Login ${item.login} already exists!`,
+			);
 			return null;
 		}
 		// проверка, что такого email-а еще нет
 		const yetAnotherUser = await this.getByEmail(item.email);
 		if (yetAnotherUser) {
-			throw new BadRequestException(`Email ${item.email} is already in use!`);
+			throw new BadRequestException(
+				`Email ${item.email} is already in use!`,
+			);
 			return null;
 		}
 
 		item.passwordHash = await hashPassword(item.login, item.passwordHash);
 		return super.create(item);
 	}
-
 
 	//
 	// СПЕЦИФИЧЕСКИЕ МЕТОДЫ
@@ -68,31 +71,46 @@ class UserStorageFile extends StorageFile<IUser, IUserDto, '_id'> {
 
 	search(params: SearchUserParams): Promise<IUser[]> {
 		return new Promise<IUser[]>((resolve) =>
-			resolve(this._storage.filter((e) => 
-						( (params.name
-							? new RegExp(params.name, 'gi').test(e['name'])
-							: false) ||
-						  (params.email
-								? new RegExp(params.email, 'gi').test(e['email'])
+			resolve(
+				this._storage
+					.filter(
+						(e) =>
+							((params.name
+								? new RegExp(params.name, 'gi').test(e['name'])
 								: false) ||
-						  (params.contactPhone
-								? new RegExp(params.contactPhone, 'gi').test(e['contactPhone'])
-								: false) ||
-				  		  ( (!params.name && !params.email && !params.contactPhone && params.role) 
-						 		? true 
-								: false) ) &&
-						  ( params.role 
-								? e['role'] == params.role 
-								: true ),
-						).slice(
-							params.offset, 
-							params.limit 
-								? params.offset 
-									? params.offset + params.limit 
-									: params.limit
-								: undefined,
-			)
-		));
+								(params.email
+									? new RegExp(params.email, 'gi').test(
+											e['email'],
+									  )
+									: false) ||
+								(params.contactPhone
+									? new RegExp(
+											params.contactPhone,
+											'gi',
+									  ).test(e['contactPhone'])
+									: false) ||
+								(!params.name &&
+								!params.email &&
+								!params.contactPhone &&
+								params.role
+									? true
+									: false)) &&
+							(params.role ? e['role'] == params.role : true),
+					)
+					.slice(
+						params.offset,
+						params.limit
+							? params.offset
+								? params.offset + params.limit
+								: params.limit
+							: undefined,
+					)
+					.map((v) => {
+						delete v.passwordHash;
+						return v;
+					}),
+			),
+		);
 	}
 }
 

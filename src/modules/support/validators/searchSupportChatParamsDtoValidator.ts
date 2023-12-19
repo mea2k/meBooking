@@ -1,5 +1,5 @@
 // eslint-disable-next-line prettier/prettier
-import { IsBoolean, IsDate, IsNumber, IsNumberString, IsOptional, IsString } from 'class-validator';
+import { IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator';
 import { Transform } from 'class-transformer';
 import { toLowerCase, toNumber } from 'src/common/functions/type_converters';
 import { ISearchChatParams } from '../support.interfaces';

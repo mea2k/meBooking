@@ -1,13 +1,14 @@
-import { Injectable, Inject } from '@nestjs/common';
-import { ConfigService } from '../config/config.service';
-import { IReservation, IReservationCreateUpdateDto, IReservationDto, RESERVATIONS_STORAGE, SearchReservationParams } from './Reservations.interfaces';
+import { Injectable, Inject, BadRequestException, HttpCode } from '@nestjs/common';
+import { IDType } from 'src/common/interfaces/types';
 import { ReservationStorageDb } from './storage/reservationStorageDb';
 import { ReservationStorageFile } from './storage/reservationStorageFile';
+import { ConfigService } from '../config/config.service';
 import { HotelsService } from '../hotels/hotels.service';
 import { HotelRoomsService } from '../hotel-rooms/hotel-rooms.service';
-import { IHotelRoom } from '../hotel-rooms/hotel-rooms.interfaces';
 import { IHotel } from '../hotels/hotels.interfaces';
-import { IDType } from 'src/common/interfaces/types';
+import { IHotelRoom } from '../hotel-rooms/hotel-rooms.interfaces';
+// eslint-disable-next-line prettier/prettier
+import { IReservation, IReservationCreateUpdateDto, IReservationDto, RESERVATIONS_STORAGE, SearchReservationParams } from './reservations.interfaces';
 
 @Injectable()
 export class ReservationsService {
@@ -47,10 +48,14 @@ export class ReservationsService {
 		if (!(await this._checkReservation(data))) return null;
 
 		// пополняем данные для сохранения в хранилище
-		const roomInfo: IHotelRoom = await this.hotelRoomService.get(data.roomId);
-		const hotelInfo: IHotel = await this.hotelService.getShortInfo(roomInfo.hotel);
-		
-		const item: IReservationDto = { 
+		const roomInfo: IHotelRoom = await this.hotelRoomService.get(
+			data.roomId,
+		);
+		const hotelInfo: IHotel = await this.hotelService.getShortInfo(
+			roomInfo.hotel,
+		);
+
+		const item: IReservationDto = {
 			...data,
 			userId: userId,
 			roomId: roomInfo._id,
@@ -59,18 +64,20 @@ export class ReservationsService {
 
 		const result: IReservation = await this._storage.create(item);
 		// если успех - дополняем результат информацией о номере и гостинице
+		// через дополнительную переменную
+		const fullData = Object.assign({}, result);
 		if (result && result._id) {
-			result.hotel = {
+			fullData.hotel = {
 				title: hotelInfo.title,
 				description: hotelInfo.description,
 			};
-			result.hotelRoom = {
+			fullData.hotelRoom = {
 				services: roomInfo.services,
 				description: roomInfo.description,
 				images: roomInfo.images,
 			};
 		}
-		return result;
+		return fullData;
 	}
 
 	/** ИЗМЕНЕНИЕ ПАРАМЕТРОВ БРОНИ НОМЕРА
@@ -81,13 +88,23 @@ export class ReservationsService {
 	 */
 	async update(id: string, item: IReservationCreateUpdateDto) {
 		// получаем полную запись и обновляем значение новых полей
-		const baseItem = await this._storage.get(this._storage.convertId(id));
+		const fullItem = await this._storage.get(this._storage.convertId(id));
 
+		// [UPDATED] теперь не надо - поскольку используется lean()
 		// для Mongo надо вернуть ._doc
-		const fullItem = {
-			...( (baseItem as any)._doc ? (baseItem as any)._doc : baseItem ),
-			...item
-		};
+		// const fullItem = {
+		// 	...( (baseItem as any)._doc ? (baseItem as any)._doc : baseItem ),
+		// 	...item
+		// };
+
+		// проверка, что такой номер есть
+		if (
+			!fullItem ||
+			!('roomId' in fullItem) ||
+			fullItem.roomId == undefined
+		) {
+			throw new BadRequestException('Data not found');
+		}
 
 		// проверка, что на данные даты номер не занят
 		if (
@@ -120,7 +137,7 @@ export class ReservationsService {
 
 	/** ПОИСК БРОНИ
 	 * @constructor
-	 * @params data    - параметры поиска в формате SearchHotelRoomParams
+	 * @params data    - параметры поиска в формате SearchReservationParams
 	 *
 	 * @returns Promise<IReservation[]>
 	 */
@@ -159,9 +176,9 @@ export class ReservationsService {
 		data: IReservationCreateUpdateDto,
 		ignoreReservationId: string = undefined,
 	) {
-		const curTime = (new Date()).getTime();
-		const resStart = (new Date(data.dateStart)).getTime();
-		const resEnd = (new Date(data.dateEnd)).getTime();
+		const curTime = new Date().getTime();
+		const resStart = new Date(data.dateStart).getTime();
+		const resEnd = new Date(data.dateEnd).getTime();
 
 		// проверка, что дата в будущем
 		if (resStart < curTime) return false;
@@ -170,15 +187,24 @@ export class ReservationsService {
 		if (resStart > resEnd) return false;
 
 		// порверка, что на номере нет брони в указанный период
-		const roomReservations = await this._storage.searchByRoom(this._storage.convertId(data.roomId));
+		const roomReservations = await this._storage.searchByRoom(
+			this._storage.convertId(data.roomId),
+		);
 		if (roomReservations && roomReservations.length) {
 			for (const r of roomReservations) {
-				if (ignoreReservationId && r._id == this._storage.convertId(ignoreReservationId))
+				if (
+					ignoreReservationId &&
+					r._id == this._storage.convertId(ignoreReservationId)
+				)
 					continue;
+
 				const curResStart = new Date(r.dateStart).getTime();
 				const curResEnd = new Date(r.dateEnd).getTime();
-				if (resEnd <= curResStart || resStart >= curResEnd) continue;
-				else return false;
+				if (resEnd <= curResStart || resStart >= curResEnd) {
+					continue;
+				} else {
+					return false;
+				}
 			}
 		}
 

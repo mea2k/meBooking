@@ -1,9 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { IDType } from 'src/common/interfaces/types';
 import { ConfigService } from '../config/config.service';
-import { HOTELS_STORAGE, IHotel, IHotelCreateDto, IHotelDto, SearchHotelParams } from './hotels.interfaces';
 import { HotelStorageFile } from './storage/hotelStorageFile';
 import { HotelStorageDb } from './storage/hotelStorageDb';
-import { IDType } from 'src/common/interfaces/types';
+// eslint-disable-next-line prettier/prettier
+import { HOTELS_STORAGE, IHotel, IHotelDto, SearchHotelParams } from './hotels.interfaces';
 
 @Injectable()
 export class HotelsService {

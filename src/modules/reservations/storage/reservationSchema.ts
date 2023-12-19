@@ -1,6 +1,6 @@
 import { Document } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { IReservation } from '../Reservations.interfaces';
+import { IReservation } from '../reservations.interfaces';
 import { Hotel } from 'src/modules/hotels/storage/hotelSchema';
 import { HotelRoom } from 'src/modules/hotel-rooms/storage/hotelroomSchema';
 import { User } from 'src/modules/users/storage/userSchema';
@@ -10,28 +10,28 @@ export type ReservationDocument = Reservation & Document;
 @Schema()
 export class Reservation implements IReservation {
 	@Prop({
-		type: String, // TODO: Сделать универсально!!!
+		type: String, // TODO: Сделать универсально (на перспективу - пока не знаю как)
 		//unique: true, // не надо, _id и так unique
 		required: true,
 	})
 	_id: IReservation['_id'];
 
 	@Prop({
-		type: String,	// TODO: Сделать универсально!!!
+		type: String, // TODO: Сделать универсально (на перспективу - пока не знаю как)
 		required: true,
 		ref: User.name,
 	})
 	userId: IReservation['userId'];
 
 	@Prop({
-		type: String,	// TODO: Сделать универсально!!!
+		type: String, // TODO: Сделать универсально (на перспективу - пока не знаю как)
 		required: true,
 		ref: Hotel.name,
 	})
 	hotelId: IReservation['hotelId'];
 
 	@Prop({
-		type: String,	// TODO: Сделать универсально!!!
+		type: String, // TODO: Сделать универсально (на перспективу - пока не знаю как)
 		required: true,
 		ref: HotelRoom.name,
 	})

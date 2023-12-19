@@ -7,9 +7,14 @@ import { ChatMessages, ChatMessageDocument } from './chatMessageSchema';
 import { IChatMessage, IChatMessageDto } from '../support.interfaces';
 
 @Injectable()
-class ChatMessageStorageDb extends StorageDb<ChatMessageDocument, IChatMessageDto, '_id'> {
+class ChatMessageStorageDb extends StorageDb<
+	ChatMessageDocument,
+	IChatMessageDto,
+	'_id'
+> {
 	constructor(
-		@InjectModel(ChatMessages.name) private chatMessageModel: Model<ChatMessageDocument>,
+		@InjectModel(ChatMessages.name)
+		private chatMessageModel: Model<ChatMessageDocument>,
 		@InjectConnection() private connection: Connection,
 	) {
 		super(chatMessageModel, '_id');
@@ -25,7 +30,6 @@ class ChatMessageStorageDb extends StorageDb<ChatMessageDocument, IChatMessageDt
 		return id;
 	}
 
-
 	//
 	// СПЕЦИФИЧЕСКИЕ МЕТОДЫ
 	//
@@ -34,18 +38,21 @@ class ChatMessageStorageDb extends StorageDb<ChatMessageDocument, IChatMessageDt
 		return this._model
 			.find({ chat: chatId }, { __v: 0 })
 			.sort({ sentAt: 1 })
-			.exec();
+			.lean();
 	}
 
 	// получение числа непрочитанных сообщений в чате
-	getUnreadCount(chatId: IChatMessage['chat'], author: IChatMessage['author']): Promise<number> {
+	getUnreadCount(
+		chatId: IChatMessage['chat'],
+		author: IChatMessage['author'],
+	): Promise<number> {
 		return this._model
 			.countDocuments({
 				chat: chatId,
 				author: { $ne: author },
 				readAt: { $exists: false },
 			})
-			.exec();
+			.lean();
 	}
 
 	// отметка сообщений о прочтении

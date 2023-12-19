@@ -1,6 +1,5 @@
 import * as bcrypt from 'bcrypt';
 
-
 /** ПОЛУЧЕНИЕ РАСШИРЕННОЙ ПАРОЛЬНОЙ СТРОКИ
  *  (для последующей генерации хеш-строки)
  * @constructor
@@ -10,10 +9,13 @@ import * as bcrypt from 'bcrypt';
  *
  * @returns string
  */
-function _generatePasswordString(login: string, password: string, secret = ''): string {
+function _generatePasswordString(
+	login: string,
+	password: string,
+	secret = '',
+): string {
 	return login + ':' + password + ':' + secret;
 }
-
 
 /** ПОЛУЧЕНИЕ ХЕШ-СТРОКИ ОТ ПАРОЛЯ
  * (используется при авторизации)
@@ -24,7 +26,11 @@ function _generatePasswordString(login: string, password: string, secret = ''): 
  *
  * @returns HASH: string or NULL
  */
-export async function hashPassword(login: string, password: string, rounds = 10) {
+export async function hashPassword(
+	login: string,
+	password: string,
+	rounds = 10,
+) {
 	try {
 		// получение расширенной парольной строки
 		const data = _generatePasswordString(login, password);
@@ -38,7 +44,6 @@ export async function hashPassword(login: string, password: string, rounds = 10)
 	return null;
 }
 
-
 /** СРАВНЕНИЕ ПАРОЛЯ И ХЕШ-СТРОКИ
  * (используется при авторизации)
  * @constructor
@@ -49,7 +54,12 @@ export async function hashPassword(login: string, password: string, rounds = 10)
  *
  * @returns TRUE или FALSE
  */
-export async function compareHash(login: string, password: string, hash: string, rounds = 10) {
+export async function compareHash(
+	login: string,
+	password: string,
+	hash: string,
+	rounds = 10,
+) {
 	try {
 		// получение расширенной парольной строки
 		const data = _generatePasswordString(login, password);
@@ -62,4 +72,3 @@ export async function compareHash(login: string, password: string, hash: string,
 	// Return FALSE if error
 	return false;
 }
-

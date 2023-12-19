@@ -9,6 +9,7 @@ import { SupportChatStorageDb } from './storage/supportChatStorageDb';
 import { SupportChatStorageFile } from './storage/supportChatStorageFile';
 import { ChatMessageStorageDb } from './storage/chatMessageStorageDb';
 import { ChatMessageStorageFile } from './storage/chatMessageStorageFile';
+// eslint-disable-next-line prettier/prettier
 import { CHATMESSAGES_STORAGE, SUPPORTCHAT_STORAGE } from './support.interfaces';
 
 @Module({
@@ -76,4 +77,4 @@ import { CHATMESSAGES_STORAGE, SUPPORTCHAT_STORAGE } from './support.interfaces'
 		},
 	],
 })
-export class SupportModule { }
+export class SupportModule {}

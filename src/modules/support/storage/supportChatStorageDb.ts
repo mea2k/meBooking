@@ -7,7 +7,11 @@ import { SupportChat, SupportChatDocument } from './supportChatSchema';
 import { ISupportChat, ISupportChatDto } from '../support.interfaces';
 
 @Injectable()
-class SupportChatStorageDb extends StorageDb<SupportChatDocument, ISupportChatDto, '_id'> {
+class SupportChatStorageDb extends StorageDb<
+	SupportChatDocument,
+	ISupportChatDto,
+	'_id'
+> {
 	constructor(
 		@InjectModel(SupportChat.name) private supportChatModel: Model<SupportChatDocument>,
 		@InjectConnection() private connection: Connection,
@@ -37,9 +41,11 @@ class SupportChatStorageDb extends StorageDb<SupportChatDocument, ISupportChatDt
 		isActive: boolean = undefined,
 	): Promise<ISupportChat[]> {
 		if (isActive == undefined) {
-			return this._model.find({ user: userId }).exec();
+			return this._model.find({ user: userId }).lean();
 		} else {
-			return this._model.find({ user: userId, isActive: isActive }).exec();
+			return this._model
+				.find({ user: userId, isActive: isActive })
+				.lean();
 		}
 	}
 }

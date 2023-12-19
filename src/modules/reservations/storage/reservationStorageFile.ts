@@ -1,11 +1,16 @@
 import * as fs from 'fs';
 import { Injectable } from '@nestjs/common';
 import { StorageFile } from '../../../storage/storageFile';
-import { IReservation, IReservationDto, SearchReservationParams } from '../Reservations.interfaces';
+// eslint-disable-next-line prettier/prettier
+import { IReservation, IReservationDto, SearchReservationParams } from '../reservations.interfaces';
 import { ConfigService } from '../../config/config.service';
 
 @Injectable()
-class ReservationStorageFile extends StorageFile<IReservation, IReservationDto, '_id'> {
+class ReservationStorageFile extends StorageFile<
+	IReservation,
+	IReservationDto,
+	'_id'
+> {
 	constructor(config: ConfigService) {
 		// Проверка на существование пути и создание его
 		if (!fs.existsSync(config.get('DATA_PATH'))) {
@@ -32,12 +37,21 @@ class ReservationStorageFile extends StorageFile<IReservation, IReservationDto, 
 	// СПЕЦИФИЧЕСКИЕ МЕТОДЫ
 	//
 	search(data: SearchReservationParams): Promise<IReservation[]> {
-		return new Promise<IReservation[]>((resolve) => resolve(
+		return new Promise<IReservation[]>((resolve) =>
+			resolve(
 				this._storage
-					.filter((e) =>
-							e.userId == ( ('userId' in data) ? data.userId : e.userId) &&
-							new Date(e.dateStart).getTime() >= (data.dateStart ? new Date(data.dateStart).getTime() : 0) &&
-							new Date(e.dateEnd).getTime() <= (data.dateEnd ? new Date(data.dateEnd).getTime() : new Date(8640000000000000).getTime()),
+					.filter(
+						(e) =>
+							e.userId ==
+								('userId' in data ? data.userId : e.userId) &&
+							new Date(e.dateStart).getTime() >=
+								(data.dateStart
+									? new Date(data.dateStart).getTime()
+									: 0) &&
+							new Date(e.dateEnd).getTime() <=
+								(data.dateEnd
+									? new Date(data.dateEnd).getTime()
+									: new Date(8640000000000000).getTime()), //MaxDate
 					)
 					.slice(
 						data.offset ? data.offset : 0,

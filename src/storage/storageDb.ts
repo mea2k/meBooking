@@ -1,6 +1,5 @@
 import 'reflect-metadata';
 import { Document, Model, SortOrder } from 'mongoose';
-import { ItemStorage } from 'src/common/interfaces/itemStorage';
 import { Storage } from './storage';
 
 // АБСТРАКТНЫЙ ШАБЛОННЫЙ КЛАСС ДЛЯ ХРАНЕНИЯ ОБЪЕКТОВ В БД MONGO
@@ -12,9 +11,11 @@ import { Storage } from './storage';
 //					  (используется для CREATE и UPDATE)
 //		KeyName - тип ключевого поля (которое является идентифицирующим для объекта)
 //					  (один из аттрибутов ItemType)
-abstract class StorageDb<ItemType, ItemTypeDto, KeyName extends keyof ItemType>
-	extends Storage<ItemType, ItemTypeDto, KeyName>
-{
+abstract class StorageDb<
+	ItemType,
+	ItemTypeDto,
+	KeyName extends keyof ItemType,
+> extends Storage<ItemType, ItemTypeDto, KeyName> {
 	// модель данных Mongoose
 	protected _model: Model<ItemType>;
 
@@ -30,14 +31,17 @@ abstract class StorageDb<ItemType, ItemTypeDto, KeyName extends keyof ItemType>
 	//
 	// РЕАЛИЗАЦИЯ МЕТОДОВ ИНТЕРФЕЙСА ITEMSTORAGE
 	//
-	getAll(offset: number = undefined, limit: number = undefined): Promise<ItemType[]> {
+	getAll(
+		offset: number = undefined,
+		limit: number = undefined,
+	): Promise<ItemType[]> {
 		return this._model
 			.find({}, { __v: 0 }, { skip: offset, limit: limit })
-			.exec();
+			.lean();
 	}
 
 	get(id: ItemType[KeyName]): Promise<ItemType | null> {
-		return this._model.findById(id, { __v: 0 }).exec();
+		return this._model.findById(id, { __v: 0 }).lean();
 	}
 
 	async create(

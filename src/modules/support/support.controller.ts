@@ -1,9 +1,10 @@
 // eslint-disable-next-line prettier/prettier
-import { Controller, Get, Post, Put, Delete, Body, Param, Request, ParseIntPipe, Query, ValidationPipe } from '@nestjs/common';
-import { SupportService } from './support.service';
+import { Controller, Get, Post, Put, Body, Param, Request, ParseIntPipe, Query, ValidationPipe } from '@nestjs/common';
 import { Roles } from 'src/common/decorators/roles.decorator';
 import { UserRoleType } from 'src/common/interfaces/types';
-import { IChatMessage, IMarkChatMessageAsRead, IMarkChatMessageAsReadDto, ISearchChatParams, ISendChatMessageDto, ISupportChat, ISupportChatCreateUpdateDto, ISupportChatDto } from './support.interfaces';
+import { SupportService } from './support.service';
+// eslint-disable-next-line prettier/prettier
+import { IChatMessage, IMarkChatMessageAsRead, IMarkChatMessageAsReadDto, ISearchChatParams, ISendChatMessageDto, ISupportChat, ISupportChatCreateUpdateDto } from './support.interfaces';
 import { SearchSupportChatParamsDto } from './validators/searchSupportChatParamsDtoValidator';
 
 @Controller('api/support')
@@ -57,7 +58,7 @@ export class SupportController {
 		const data: ISearchChatParams = {
 			user: req.user._id,
 			limit: limit ? limit : undefined,
-			offset: offset ? offset : undefined
+			offset: offset ? offset : undefined,
 		};
 		return this.supportService.searchChats(data);
 	}
@@ -69,7 +70,7 @@ export class SupportController {
 	getByUser(
 		@Query(new ValidationPipe({ whitelist: true, transform: true }))
 		params: SearchSupportChatParamsDto,
-		@Param('id') id: string
+		@Param('id') id: string,
 	): Promise<ISupportChat[]> {
 		// добавляем информацию о польщователе из Query
 		params.user = id;
@@ -109,10 +110,12 @@ export class SupportController {
 		@Body() data: ISendChatMessageDto,
 		@Request() req,
 	): Promise<IChatMessage | null> {
-		if (!data.text)
+		if (!data.text) {
 			return null;
-		if (!data.author)
+		}
+		if (!data.author) {
 			data.author = req.user._id;
+		}
 		// явно задаем ID чата (из URL)
 		data.supportChat = id;
 		return this.supportService.createMessage(data);
@@ -132,9 +135,7 @@ export class SupportController {
 			author: req.user?._id,
 			createdBefore: new Date(data.createdBefore),
 			supportChat: id,
-		}
+		};
 		return this.supportService.markMessagesAsRead(param);
 	}
-
-
 }

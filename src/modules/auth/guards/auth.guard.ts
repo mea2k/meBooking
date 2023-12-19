@@ -4,6 +4,12 @@ import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
 import { ConfigService } from '../../config/config.service';
 
+/** GUARD - ПРОВЕРКА АУТЕНТИФИЦИРОВАННОСТИ ПОЛЬЗОВАТЕЛЯ
+ * 						НА ОСНОВЕ JWT ИЗ ЗАГОЛОВКА ЗАПРОСА
+ * @constructor
+ * @params NONE (информация берется из заголовка Request)
+ * @returns TRUE ИЛИ исключение UnauthorizedException
+ */
 @Injectable()
 export class AuthGuard implements CanActivate {
 	constructor(
@@ -26,7 +32,7 @@ export class AuthGuard implements CanActivate {
 			// 💡 We're assigning the payload to the request object here
 			// so that we can access it in our route handlers
 			request['user'] = payload;
-		} catch(e) {
+		} catch (e) {
 			throw new UnauthorizedException((e as Error).message);
 		}
 

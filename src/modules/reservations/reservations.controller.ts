@@ -1,13 +1,13 @@
 // eslint-disable-next-line prettier/prettier
 import { Controller, Get, Post, Put, Delete, Body, Param, Request, UseGuards } from '@nestjs/common';
-import { ReservationsService } from './reservations.service';
-import { IReservation, IReservationCreateUpdateDto, SearchReservationParams } from './Reservations.interfaces';
 import { UserRoleType } from 'src/common/interfaces/types';
 import { Roles } from 'src/common/decorators/roles.decorator';
+import { ReservationsService } from './reservations.service';
+// eslint-disable-next-line prettier/prettier
+import { IReservation, IReservationCreateUpdateDto, SearchReservationParams } from './reservations.interfaces';
 import { ReservationDtoValidator } from './validators/reservationDtoValidator';
-import { OwnerGuard } from '../users/guards/owner.guard';
+import { AuthGuard } from '../auth/guards/auth.guard';
 import { ReservationOwnerGuard } from './guards/reservationOwner.guard';
-import { IUser } from '../users/users.interfaces';
 
 @Controller('api/reservations')
 export class ReservationsController {
@@ -22,9 +22,8 @@ export class ReservationsController {
 	}
 
 	// ПОИСК БРОНЕЙ КОНКРЕТНОГО ПОЛЬЗОВАТЕЛЯ
-	// (доступно только менеджеру 
-	//  TODO: и собственнику - собственнику пока не сделано (как сделать guards с логикой ИЛИ?))
-	@Roles(UserRoleType.MANAGER, UserRoleType.CLIENT)
+	// (доступно только менеджеру)
+	@Roles(UserRoleType.MANAGER)
 	//@UseGuards(OwnerGuard)
 	@Get('user/:id')
 	searchByUser(@Param('id') id: string): Promise<IReservation[]> {
@@ -41,7 +40,7 @@ export class ReservationsController {
 	// (доступно только клиенту после авторизации)
 	@Roles(UserRoleType.CLIENT)
 	@Get('user')
-	getByUser(@Request() req): Promise<IReservation[]> {
+	getByUser(): Promise<IReservation[]> {
 		return this.reservationsService.getAll();
 	}
 
@@ -71,10 +70,21 @@ export class ReservationsController {
 	}
 
 	// ИЗМЕНЕНИЕ БРОНИ
-	// (доступно только менеджеру пока TODO: дать доступ клиенту-автору брони)
+	// (доступно только клиенту-автору брони)
+	@UseGuards(ReservationOwnerGuard)
+	@Put('user/:id')
+	update(
+		@Param('id') id: string,
+		@Body() item: IReservationCreateUpdateDto,
+	): Promise<IReservation | null> {
+		return this.reservationsService.update(id, item);
+	}
+
+	// ИЗМЕНЕНИЕ БРОНИ
+	// (доступно только менеджеру)
 	@Roles(UserRoleType.MANAGER)
 	@Put(':id')
-	update(
+	updateByManager(
 		@Param('id') id: string,
 		@Body() item: IReservationCreateUpdateDto,
 	): Promise<IReservation | null> {

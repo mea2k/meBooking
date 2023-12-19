@@ -90,7 +90,7 @@ export interface IHotelRoomDto {
  * Обязательным является только поля title
  */
 export interface SearchHotelRoomParams {
-	title: IHotelRoom['title'];
+	title?: IHotelRoom['title'];
 	hotel?: IHotelRoom['hotel'];
 	services?: IHotelRoom['services'];
 	isEnabled?: IHotelRoom['isEnabled'];

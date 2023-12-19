@@ -15,7 +15,6 @@ export const DEFAULT_USER_ROLE: UserRoleType = UserRoleType.CLIENT;
 // тип данных для типа хранилища
 export type StorageType = 'file' | 'mongo';
 
-
 export interface ToNumberOptions {
 	default?: number;
 	min?: number;

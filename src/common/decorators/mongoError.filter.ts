@@ -1,9 +1,11 @@
 // eslint-disable-next-line prettier/prettier
-import { ArgumentsHost, BadRequestException, Catch, ExceptionFilter, HttpException, HttpStatus } from '@nestjs/common';
+import { ArgumentsHost, Catch, ExceptionFilter, HttpStatus } from '@nestjs/common';
 import { MongoError } from 'mongodb';
-import { MongooseError } from 'mongoose';
 
-
+// Перехват MONGO-исключений,
+// возникающих при работе с Model (Mongoose)
+// (у Mongoose/Model и Mongo свои исключения)
+// в результате генерится 404 - NOT FOUND
 @Catch(MongoError)
 export class MongoExceptionFilter implements ExceptionFilter {
 	catch(exception: MongoError, host: ArgumentsHost) {
@@ -22,8 +24,8 @@ export class MongoExceptionFilter implements ExceptionFilter {
 			case 'DocumentNotFoundError': {
 				error = {
 					statusCode: HttpStatus.NOT_FOUND,
-					message: "Not Found"
-				}
+					message: 'Not Found',
+				};
 				break;
 			}
 			// case 'MongooseError': { break; } // general Mongoose error
@@ -42,13 +44,13 @@ export class MongoExceptionFilter implements ExceptionFilter {
 			default: {
 				error = {
 					statusCode: HttpStatus.BAD_REQUEST,
-					message: (exception as Error).message
-				}
+					message: (exception as Error).message,
+				};
 				break;
 			}
 		}
 		response.status(error.statusCode).json(error);
 		//throw new HttpException((exception as Error).message, HttpStatus.BAD_REQUEST);
-		//throe new BadRequestException((exception as Error).message);
+		//throw new BadRequestException((exception as Error).message);
 	}
 }

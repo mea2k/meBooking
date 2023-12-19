@@ -1,5 +1,5 @@
 // eslint-disable-next-line prettier/prettier
-import { CanActivate, ExecutionContext,	Injectable,	SetMetadata, Type } from '@nestjs/common';
+import { CanActivate, ExecutionContext,	Injectable,	Type } from '@nestjs/common';
 import { ModuleRef, Reflector } from '@nestjs/core';
 
 @Injectable()
@@ -7,7 +7,7 @@ export class MultipleGuard implements CanActivate {
 	constructor(
 		private readonly reflector: Reflector,
 		private readonly moduleRef: ModuleRef,
-	) { }
+	) {}
 
 	public async canActivate(context: ExecutionContext): Promise<boolean> {
 		const allowedGuardsHandlers =

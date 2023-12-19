@@ -17,14 +17,14 @@ export interface IConfig {
 	MONGO_PASSWORD: string; //  "user",
 
 	// КОНСТАНТЫ ДЛЯ РАБОТЫ С ФАЙЛАМИ
-	DATA_PATH: string; 			//  'data/',
-	UPLOAD_PATH: string; 		//  'public/upload'
-	USERS_FILE: string; 		//  'users.json',
-	HOTELS_FILE: string;		//  'hotels.json',
-	HOTELROOMS_FILE: string; 	//	'hotelrooms.json',
-	RESERVATIONS_FILE: string;	//  'reservations.json'
-	SUPPORTCHAT_FILE: string;	//  'chat.json',
-	CHATMESSAGES_FILE: string;	//  'chat_messages.json',
+	DATA_PATH: string; //  			'data/',
+	UPLOAD_PATH: string; // 		'public/upload'
+	USERS_FILE: string; //  		'users.json',
+	HOTELS_FILE: string; //  		'hotels.json',
+	HOTELROOMS_FILE: string; //		'hotelrooms.json',
+	RESERVATIONS_FILE: string; //	'reservations.json'
+	SUPPORTCHAT_FILE: string; //	'chat.json',
+	CHATMESSAGES_FILE: string; //	'chat_messages.json',
 
 	// КОНСТАНТЫ ДЛЯ ГЕНЕРАЦИИ JWT
 	JWT_SECRET: string;

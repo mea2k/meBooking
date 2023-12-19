@@ -12,7 +12,7 @@ export const RESERVATIONS_STORAGE = 'RESERVATIONS_STORAGE';
  *   dateStart:    	Date    - дата начала брони (обязательный параметр)
  *   dateEnd:    	Date    - дата окончания брони (обязательный параметр)
  *   description:   string  - описание
- * 
+ *
  * 	 hoterRoom и hotel - добавляются ТОЛЬКО после добавления/обновления брони
  *
  * Обязательным являются только поля ID, userId, hotelId, roomId, dateStart, dateEnd
@@ -54,7 +54,6 @@ export interface IReservationCreateUpdateDto {
 	description?: IReservation['description'];
 }
 
-
 /** ИНТЕРФЕЙС - ДАННЫЕ_ДЛЯ_СОЗДАНИЯ_ОБНОВЛЕНИЯ_БРОНИ
  * Определяет информацию, на основании которой создается/изменяется объект ГОСТИНИЦА:
  * (берется из формы создания/изменения)
@@ -75,10 +74,9 @@ export interface IReservationDto {
 	description?: IReservation['description'];
 }
 
-
 /** ИНТЕРФЕЙС - ПАРАМЕТРЫ_ПОИСКА
  * Определяет параметры поиска объектов в хранилище
- *   userId:        IDType  - ID пользователя 
+ *   userId:        IDType  - ID пользователя
  *   dateStart:    	Date    - дата начала брони (обязательный параметр)
  *   dateEnd:    	Date    - дата окончания брони (обязательный параметр)
  *   limit:         number   - количество найденных объектов

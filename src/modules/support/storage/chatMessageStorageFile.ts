@@ -5,7 +5,11 @@ import { StorageFile } from '../../../storage/storageFile';
 import { IChatMessage, IChatMessageDto } from '../support.interfaces';
 
 @Injectable()
-class ChatMessageStorageFile extends StorageFile<IChatMessage, IChatMessageDto, '_id'> {
+class ChatMessageStorageFile extends StorageFile<
+	IChatMessage,
+	IChatMessageDto,
+	'_id'
+> {
 	constructor(config: ConfigService) {
 		// Проверка на существование пути и создание его
 		if (!fs.existsSync(config.get('DATA_PATH'))) {
@@ -37,14 +41,18 @@ class ChatMessageStorageFile extends StorageFile<IChatMessage, IChatMessageDto, 
 	}
 
 	// получение числа непрочитанных сообщений в чате
-	getUnreadCount(chatId: IChatMessage['chat'], author: IChatMessage['author']): Promise<number> {
+	getUnreadCount(
+		chatId: IChatMessage['chat'],
+		author: IChatMessage['author'],
+	): Promise<number> {
 		return new Promise<number>((resolve) =>
-			resolve(this._storage.filter(
-				(e) =>
-					e.chat == chatId &&
-					e.author != author &&
-					(!('readAt' in e) || (e.readAt == undefined))
-			).length,
+			resolve(
+				this._storage.filter(
+					(e) =>
+						e.chat == chatId &&
+						e.author != author &&
+						(!('readAt' in e) || e.readAt == undefined),
+				).length,
 			),
 		);
 	}
@@ -55,14 +63,14 @@ class ChatMessageStorageFile extends StorageFile<IChatMessage, IChatMessageDto, 
 		author: IChatMessage['author'],
 		createdBefore: Date,
 	): Promise<any> {
-		var count: number = 0;
+		let count = 0;
 		try {
 			this._storage.forEach((e, i, arr) => {
 				if (
 					e.chat == chatId &&
 					e.author != author &&
 					!('readAt' in e || e.readAt == undefined) &&
-					( new Date(e.sentAt).getTime() <= createdBefore.getTime() )
+					new Date(e.sentAt).getTime() <= createdBefore.getTime()
 				) {
 					// модифицируем жлемент исходного массива
 					arr[i].readAt = new Date();

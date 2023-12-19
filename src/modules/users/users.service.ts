@@ -1,9 +1,10 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
-import { IUser, IUserDto, SearchUserParams, USERS_STORAGE } from './users.interfaces';
+import { IDType } from 'src/common/interfaces/types';
 import { UserStorageFile } from './storage/userStorageFile';
 import { UserStorageDb } from './storage/userStorageDb';
 import { ConfigService } from '../config/config.service';
-import { IDType } from 'src/common/interfaces/types';
+// eslint-disable-next-line prettier/prettier
+import { IUser, IUserDto, SearchUserParams, USERS_STORAGE } from './users.interfaces';
 
 @Injectable()
 export class UsersService {
@@ -41,7 +42,10 @@ export class UsersService {
 		try {
 			return this._storage.create(item);
 		} catch(e) {
-			throw new HttpException((e as Error).message, HttpStatus.BAD_REQUEST);
+			throw new HttpException(
+				(e as Error).message,
+				HttpStatus.BAD_REQUEST,
+			);
 		}
 	}
 
@@ -87,7 +91,6 @@ export class UsersService {
 	search(params: SearchUserParams): Promise<IUser[]> {
 		return this._storage.search(params);
 	}
-
 
 	/** ПРОВЕРКА РАВЕНСТВА ИДЕНТИФИКАТОРОВ ПОЛЬЗОВАТЕЛЯ
 	 * (используется при определении авторства объекта)

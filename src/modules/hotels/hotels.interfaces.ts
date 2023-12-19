@@ -21,7 +21,6 @@ export interface IHotel {
 	updatedAt?: Date;
 }
 
-
 /** ИНТЕРФЕЙС - ДАННЫЕ_ИЗ_ФОРМЫ_ДЛЯ_ГОСТИНИЦЫ
  * Определяет информацию, на основании которой создается/изменяется объект ГОСТИНИЦА:
  * (берется из формы создания/изменения)
@@ -61,7 +60,7 @@ export interface IHotelDto {
  * Обязательным является только поля title
  */
 export interface SearchHotelParams {
-	title: IHotel['title'];
+	title?: IHotel['title'];
 	limit?: number;
 	offset?: number;
 }

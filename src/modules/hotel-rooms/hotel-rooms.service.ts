@@ -2,7 +2,8 @@ import { Injectable, Inject } from '@nestjs/common';
 import { ConfigService } from '../config/config.service';
 import { HotelRoomStorageFile } from './storage/hotelroomStorageFile';
 import { HotelRoomStorageDb } from './storage/hotelroomStorageDb';
-import { HOTELROOMS_STORAGE, IHotelRoom, IHotelRoomCreateUpdateDto, IHotelRoomDto, SearchHotelRoomByHotelParams, SearchHotelRoomParams } from './hotel-rooms.interfaces';
+// eslint-disable-next-line prettier/prettier
+import { HOTELROOMS_STORAGE, IHotelRoom, IHotelRoomCreateUpdateDto, IHotelRoomDto, SearchHotelRoomParams } from './hotel-rooms.interfaces';
 
 @Injectable()
 export class HotelRoomsService {
@@ -22,6 +23,7 @@ export class HotelRoomsService {
 	}
 
 	/** ПОЛУЧЕНИЕ ИНФОРМАЦИИ ПО ВЫБРАННОМУ НОМЕРУ
+	 * @constructor
 	 * @params {string} id - ID объекта
 	 * @returns Promise<информация об объекте в формате JSON {...}>
 	 */
@@ -72,17 +74,17 @@ export class HotelRoomsService {
 	// СПЕЦИФИЧЕСКИЕ МЕТОДЫ
 	///////////////////////////////////////////////////////////////////////////
 
-	/** ПОИСК НОМЕРА ГОСТИНИЦЫ 
+	/** ПОИСК НОМЕРА ГОСТИНИЦЫ
 	 * @constructor
-	 * @params data    - параметры поиска в формате SearchHotelRoomParams
-	 *
+	 * @params {SearchHotelRoomParams} data - параметры поиска типа SearchHotelRoomParams
+	 * 							({title, hotel?, services?, isEnabled?,	limit?, offset?})
 	 * @returns Promise<IHotel[]>
 	 */
 	search(data: SearchHotelRoomParams): Promise<IHotelRoom[]> {
 		return this._storage.search(data);
 	}
 
-	/** ПОЛУЧЕНИЕ СПИСКА НОМЕРОВ ГОСТИНИЦЫ 
+	/** ПОЛУЧЕНИЕ СПИСКА НОМЕРОВ ГОСТИНИЦЫ
 	 * @constructor
 	 * @params {string} hotelId   - ID гостиницы
 	 * @params {number} offset    - смещение выборки
@@ -98,12 +100,11 @@ export class HotelRoomsService {
 		// поиск только по доступным номерам
 		// (isEnabled = true)
 		const searchData: SearchHotelRoomParams = {
-			title: '',
 			hotel: this._storage.convertId(hotelId),
 			isEnabled: true,
 			offset: offset ? offset : undefined,
 			limit: limit ? limit : undefined,
-		}
+		};
 		return this._storage.search(searchData);
 	}
 }

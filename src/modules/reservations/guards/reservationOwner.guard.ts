@@ -23,7 +23,6 @@ export class ReservationOwnerGuard implements CanActivate {
 			const user = request['user'];
 			const reservation = await this.reservationService.get(id);
 			if (!this.userService.compare(user, reservation.userId)) {
-
 				throw new HttpException(
 					'You are forbidden to access the object',
 					HttpStatus.FORBIDDEN,

@@ -15,42 +15,67 @@ export class AuthService {
 		private configService: ConfigService,
 	) { }
 
-	// аутентификация пользователя
+	/** АУТЕНТИФИКАЦИЯ ПОЛЬЗОВАТЕЛЯ НА ОСНОВАНИИ ЗАПРОСА
+	 * @constructor
+	 * @params {IUSerAuthDto} - параметры нового пользователя ({login, password})
+	 * @returns Promise<IUser> - информацию о пользователе IUser
+	 * 			ИЛИ исключение UnauthorizedException
+	 */
 	async login(userAuth: IUSerAuthDto): Promise<IUser> {
 		// поиск пользователя в хранилище
 		const user = await this.usersService.getByLogin(userAuth.login);
 		// сравнение пароля и хеш-строки из хранилища
-		if (user && (await compareHash(user.login, userAuth.password, user.passwordHash))) {
-			const { passwordHash, ...result } = user;
-			// для Mongo надо вернуть ._doc
-			return (result as any)._doc ? (result as any)._doc : result;
+		if (
+			user &&
+			user.passwordHash &&
+			(await compareHash(
+				user.login,
+				userAuth.password,
+				user.passwordHash,
+			))
+		) {
+			// убираем пароль из выдачи
+			// через полную копию объекта,
+			// чтобы не изменить оригинал оператором delete
+			const userNoPassword = Object.assign({}, user);
+			delete userNoPassword.passwordHash;
+			return userNoPassword;
 		}
 		// если не совпало - формируется исключение
 		throw new UnauthorizedException();
 	}
 
-	// получение JWT после аутентификации
+	/** ПОЛУЧЕНИЕ ТОКЕНА (JWT) ПОЛЬЗОВАТЕЛЯ
+	 * @constructor
+	 * @params {IUSer} - объект USER
+	 * @returns Promise<string> - JWT в виде строки
+	 */
 	createToken(user: IUser): string {
+		const userNoPassword = Object.assign({}, user);
 		// убираем пароль из JWT
-		let data = {};
-		if (user?.passwordHash) {
-			const { passwordHash, ...restData } = user;
-			data = restData;
-		} else {
-			data = user;
-		}
-		return this.jwtService.sign(data, {
+		// через полную копию объекта,
+		// чтобы не изменить оригинал оператором delete
+		delete userNoPassword.passwordHash;
+		// берем значения параметров из ConfigModule (ConfigService)
+		return this.jwtService.sign(userNoPassword, {
 			secret: this.configService.get('JWT_SECRET'),
 			expiresIn: this.configService.get('JWT_EXPIRE'),
 		});
 	}
 
-	// проверка на существование пользователя
-	async validateUser(user: IUser): Promise<any> {
-		const data = await this.usersService.get(user?._id.toString());
-		if (data) {
-			return user;
-		}
-		return null;
+	/** ПРОВЕРКА НА СУЩЕСТВОАНИЕ ПОЛЬЗОВАТЕЛЯ
+	 * @constructor
+	 * @params {IUSer} - объект USER
+	 * @returns Promise<IUser | null> - Jобъект IUser ИЛИ NULL
+	 */
+	async validateUser(user: IUser): Promise < any > {
+	// поиск пользователя по ID в хранилище
+	// используем UsersModule (UsersService)
+	const data = await this.usersService.get(user?._id.toString());
+	if(data) {
+		return user;
 	}
+		// пользователь не найден
+		return null;
+}
 }

@@ -32,18 +32,20 @@ class HotelStorageFile extends StorageFile<IHotel, IHotelDto, '_id'> {
 	// СПЕЦИФИЧЕСКИЕ МЕТОДЫ
 	//
 	search(params: SearchHotelParams): Promise<IHotel[]> {
-		return new Promise<IHotel[]>((resolve) => 
-			resolve(this._storage
-				.filter((e) => new RegExp(params.title, 'gi').test(e.title))
-				.slice(
-					params.offset ? params.offset : 0,
-					params.limit
-						? params.offset
-							? params.offset + params.limit
-							: params.limit
-						: undefined,
+		return new Promise<IHotel[]>((resolve) =>
+			resolve(
+				this._storage
+					.filter((e) => new RegExp(params.title, 'gi').test(e.title))
+					.slice(
+						params.offset ? params.offset : 0,
+						params.limit
+							? params.offset
+								? params.offset + params.limit
+								: params.limit
+							: undefined,
 					),
-			));
+			),
+		);
 	}
 }
 

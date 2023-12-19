@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { ItemStorage } from 'src/common/interfaces/itemStorage';
 
-// АБСТРАКТНЫЙ ШАБЛОННЫЙ КЛАСС ДЛЯ ХРАНЕНИЯ ОБЪЕКТОВ 
+// АБСТРАКТНЫЙ ШАБЛОННЫЙ КЛАСС ДЛЯ ХРАНЕНИЯ ОБЪЕКТОВ
 // Реализует интерфейс ItemStorage
 // ШАБЛОННЫЕ ТИПЫ:
 //		ItemType - тип хранимого объекта
@@ -43,14 +43,15 @@ abstract class Storage<ItemType, ItemTypeDto, KeyName extends keyof ItemType>
 	// РЕАЛИЗАЦИЯ МЕТОДОВ ИНТЕРФЕЙСА ITEMSTORAGE
 	//
 	public abstract getAll(
-		offset?: number,	// default undefined
-		limit?: number,		// default undefined
+		offset?: number, // default undefined
+		limit?: number, // default undefined
 	): Promise<ItemType[]>;
 
 	public abstract get(id: ItemType[KeyName]): Promise<ItemType | null>;
 
 	public abstract create(item: ItemType | ItemTypeDto): Promise<ItemType>;
 
+	// eslint-disable-next-line prettier/prettier
 	public abstract update(id: ItemType[KeyName], item: ItemType | ItemTypeDto): Promise<ItemType | null>;
 
 	public abstract delete(id: ItemType[KeyName]): Promise<boolean>;

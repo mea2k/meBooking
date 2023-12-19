@@ -22,7 +22,6 @@ export class ChatMessages implements IChatMessage {
 	})
 	chat: IChatMessage['chat'];
 
-
 	@Prop({
 		type: String,
 		required: true,
@@ -33,7 +32,7 @@ export class ChatMessages implements IChatMessage {
 	@Prop({
 		type: Date,
 		required: true,
-		default: Date.now
+		default: Date.now,
 	})
 	sentAt: IChatMessage['sentAt'];
 

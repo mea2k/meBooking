@@ -4,13 +4,18 @@ import { InjectModel, InjectConnection } from '@nestjs/mongoose';
 import { Connection, Model } from 'mongoose';
 import { StorageDb } from '../../../storage/storageDb';
 import { HotelRoom, HotelRoomDocument } from './hotelroomSchema';
+// eslint-disable-next-line prettier/prettier
 import { IHotelRoom, IHotelRoomDto, SearchHotelRoomParams } from '../hotel-rooms.interfaces';
-import { toBool } from 'src/common/functions/type_converters';
 
 @Injectable()
-class HotelRoomStorageDb extends StorageDb<HotelRoomDocument, IHotelRoomDto, '_id'> {
+class HotelRoomStorageDb extends StorageDb<
+	HotelRoomDocument,
+	IHotelRoomDto,
+	'_id'
+> {
 	constructor(
-		@InjectModel(HotelRoom.name) private HotelRoomModel: Model<HotelRoomDocument>,
+		@InjectModel(HotelRoom.name)
+		private HotelRoomModel: Model<HotelRoomDocument>,
 		@InjectConnection() private connection: Connection,
 	) {
 		super(HotelRoomModel, '_id');
@@ -37,19 +42,23 @@ class HotelRoomStorageDb extends StorageDb<HotelRoomDocument, IHotelRoomDto, '_i
 
 		// формируем фильтр поиска исходя из заполненных полей params
 		const filter = [{}];
-		'title' in params && params.title &&
+		'title' in params &&
+			params.title &&
+			params.title.length &&
 			filter.push({ title: new RegExp(params.title, 'gi') });
-		'hotel' in params && params.hotel &&
+		'hotel' in params &&
+			params.hotel &&
 			filter.push({ hotel: params.hotel });
-		'services' in params && servicesSearchArray.length &&
+		'services' in params &&
+			servicesSearchArray.length &&
 			filter.push({ services: { $all: servicesSearchArray } });
-		'isEnabled' in params &&
-			filter.push({ isEnabled: params.isEnabled });
+		'isEnabled' in params && filter.push({ isEnabled: params.isEnabled });
 
 		return this._model
 			.find({ $and: filter }, { __v: 0 })
 			.skip(params.offset ? params.offset : 0)
-			.limit(params.limit ? params.limit : 0);
+			.limit(params.limit ? params.limit : 0)
+			.lean();
 	}
 }
 
