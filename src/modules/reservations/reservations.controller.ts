@@ -40,8 +40,8 @@ export class ReservationsController {
 	// (доступно только клиенту после авторизации)
 	@Roles(UserRoleType.CLIENT)
 	@Get('user')
-	getByUser(): Promise<IReservation[]> {
-		return this.reservationsService.getAll();
+	getByUser(@Request() req): Promise<IReservation[]> {
+		return this.reservationsService.searchByUser(req.user?._id);
 	}
 
 	// ИНФОРМАЦИЯ О КОНКРЕТНОЙ БРОНИ
